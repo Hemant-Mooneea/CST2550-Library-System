@@ -30,7 +30,7 @@ class Member : public Person
         std::string email);
         std::string getMember();
         std::vector <Book*> getBooksBorrowed();
-        void setBooksBorrowed(Book book;);  
+        void setBooksBorrowed(Book book);  
         
 };
 class Librarian : public Person
@@ -70,8 +70,8 @@ class Book
         std::string getAuthorFirstName();
         std::string getAuthorLastName();
         Date getDueDate();
-        void setDueDate(dueDate date);  
+        void setDueDate(Date dueDate);  
         void returnBook();
-        void borrowBook(Member borrower, dueDate Date)
+        void borrowBook(Member borrower, Date dueDate);
 };
 #endif
