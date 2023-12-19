@@ -35,12 +35,26 @@ class Member : public Person
 };
 class Librarian : public Person
 { 
-
+    private:
+        int staffId;
+        int salary;
+    public:
+        Librarian(int staffID, std::string name, std::string address,
+        std::string email, int salary);
+        void addMember();
+        void issueBook(int memberID, int bookID);
+        void returnBook(int memberID, int bookID);
+        void displayBorrowedBooks(int memberID);
+        void calcFine(int memberID);
+        int getStaffID();
+        int setStaffID();
+        int getSalary();
+        void setSalary(int salary);
 };
 
 class Book
 {
-    public:
+    private:
         int bookID;
         std::string bookName;
         std::string authorFirstName;
@@ -48,7 +62,7 @@ class Book
         std::string bookType;
         Date dueDate;
         Member borrower;
-    private:
+    public:
         Book(int bookID, std::string bookName, std::string authorFirstName,
         std::string authorLastName);
         std::string getbookID();
