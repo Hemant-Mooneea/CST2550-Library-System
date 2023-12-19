@@ -3,7 +3,9 @@
     
 #include <string>
 #include <vector>
-#include <date.h>
+#include "date.h"
+
+class Book;
 
 class Person
 {
@@ -33,6 +35,7 @@ class Member : public Person
         void setBooksBorrowed(Book book);  
         
 };
+
 class Librarian : public Person
 { 
     private:
@@ -51,7 +54,6 @@ class Librarian : public Person
         int getSalary();
         void setSalary(int salary);
 };
-
 class Book
 {
     private:

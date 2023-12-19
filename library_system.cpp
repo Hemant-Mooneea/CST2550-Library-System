@@ -39,6 +39,5 @@ std::string email, int salary)
 
 int main()
 {
-    Librarian lib(1000, "a", "b", "gmail", 10000);
-    return 1;
+    
 }
