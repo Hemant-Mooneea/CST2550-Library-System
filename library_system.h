@@ -3,9 +3,16 @@
     
 #include <string>
 #include <vector>
-#include "date.h"
 
 class Book;
+
+struct Date 
+{
+    //unsigned used to prevent negative numbers
+    unsigned year;
+    unsigned month;
+    unsigned day;
+};
 
 class Person
 {
