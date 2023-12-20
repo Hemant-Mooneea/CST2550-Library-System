@@ -73,11 +73,20 @@ void Librarian::setSalary(int salary)
     
 }
 
-
-
-
-int main()
+Member::Member(int memberId, std::string name, std::string address, std::string email)
 {
+}
 
-return 1;   
+std::string Member::getMemberID()
+{
+    return std::string();
+}
+
+std::vector<Book *> Member::getBooksBorrowed()
+{
+    return std::vector<Book *>();
+}
+
+void Member::setBooksBorrowed(Book book)
+{
 }
