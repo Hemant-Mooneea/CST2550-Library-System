@@ -36,8 +36,48 @@ std::string email, int salary)
     setAddress(address);
     setEmail(email);
 }
+void Librarian::addMember()
+{
+
+}
+void Librarian::issueBook(int memberID, int bookID)
+{
+
+}
+void Librarian::returnBook(int memberID, int bookID)
+{
+
+}
+void Librarian::displayBorrowedBooks(int memberID)
+{
+
+}
+void Librarian::calcFine(int memberID)
+{
+
+}
+int Librarian::getStaffID()
+{
+
+}
+int Librarian::setStaffID()
+{
+
+}
+int Librarian::getSalary()
+{
+
+}
+void Librarian::setSalary(int salary)
+{
+    
+}
+
+
+
 
 int main()
 {
-    
+
+return 1;   
 }

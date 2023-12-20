@@ -4,7 +4,11 @@
 #include <string>
 #include <vector>
 
+// class declarations to avoid referencing errors
 class Book;
+class Person;
+class Librarian;
+class Member;
 
 struct Date 
 {
@@ -37,7 +41,7 @@ class Member : public Person
     public:  
         Member(int memberId, std::string name, std::string address,
         std::string email);
-        std::string getMember();
+        std::string getMemberID();
         std::vector <Book*> getBooksBorrowed();
         void setBooksBorrowed(Book book);  
         
