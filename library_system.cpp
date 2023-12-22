@@ -136,7 +136,7 @@ Date Book::getDueDate()
 }
 void Book::setDueDate(Date dueDate)
 {
-
+    this->dueDate = dueDate;
 }
 void Book::returnBook()
 {
