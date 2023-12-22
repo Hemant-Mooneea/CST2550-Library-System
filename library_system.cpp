@@ -2,6 +2,7 @@
 #include <vector>
 #include "library_system.h"
 
+//Methods for Class Person
 std::string Person::getName()
 {
     return this->name;
@@ -27,6 +28,7 @@ void Person::setAddress(std::string address)
     this->address = address;
 }
 
+//Methods for Librarian Class
 Librarian::Librarian(int staffID, std::string name, std::string address,
 std::string email, int salary)
 {
@@ -72,21 +74,64 @@ void Librarian::setSalary(int salary)
 {
     
 }
-
-Member::Member(int memberId, std::string name, std::string address, std::string email)
+//Methods for Member Class
+Member::Member(int memberId, std::string name, std::string address, 
+std::string email)
 {
-}
 
+}
 std::string Member::getMemberID()
 {
-    return std::string();
+
 }
 
 std::vector<Book *> Member::getBooksBorrowed()
 {
-    return std::vector<Book *>();
+
 }
 
 void Member::setBooksBorrowed(Book book)
 {
+
 }
+//Methods for Book Class
+Book::Book(int bookID, std::string bookName, std::string authorFirstName, 
+std::string authorLastName)
+{
+
+}
+std::string Book::getbookID()
+{
+
+}
+
+std::string Book::getbookName()
+{
+
+}
+
+std::string Book::getAuthorFirstName()
+{
+
+}
+std::string Book::getAuthorLastName()
+{
+
+}
+Date Book::getDueDate()
+{
+
+}
+void Book::setDueDate(Date dueDate)
+{
+
+}
+void Book::returnBook()
+{
+
+}
+void Book::borrowBook(Member borrower, Date dueDate)
+{
+
+}
+
