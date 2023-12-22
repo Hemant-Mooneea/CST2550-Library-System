@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <vector>
 #include "library_system.h"
 
@@ -60,29 +61,35 @@ void Librarian::calcFine(int memberID)
 }
 int Librarian::getStaffID()
 {
-
+    return this->staffId;
 }
-int Librarian::setStaffID()
+int Librarian::setStaffID(int staffID)
 {
-
+    this->staffId = staffID;
 }
 int Librarian::getSalary()
 {
-
+    return this->salary;
 }
 void Librarian::setSalary(int salary)
 {
-    
+    this->salary = salary;
 }
 //Methods for Member Class
 Member::Member(int memberId, std::string name, std::string address, 
 std::string email)
 {
+    this->memberId = memberId;
+    setEmail(email);
+    setAddress(address);
+    setName(name);
 
 }
 std::string Member::getMemberID()
-{
-
+{   
+    //converting memberId to string since method returns string
+    std::string memberIdString = std::to_string(this->memberId);
+    return memberIdString;
 }
 
 std::vector<Book *> Member::getBooksBorrowed()
@@ -94,33 +101,39 @@ void Member::setBooksBorrowed(Book book)
 {
 
 }
+
 //Methods for Book Class
 Book::Book(int bookID, std::string bookName, std::string authorFirstName, 
 std::string authorLastName)
 {
-
+    this->bookID = bookID;
+    this->bookName = bookName;
+    this->authorFirstName = authorFirstName;
+    this->authorLastName = authorLastName;
 }
 std::string Book::getbookID()
 {
-
+    //converting bookID to string since method returns string
+    std::string bookIDString = std::to_string(this->bookID);
+    return bookIDString;
 }
 
 std::string Book::getbookName()
 {
-
+    return this->bookName;
 }
 
 std::string Book::getAuthorFirstName()
 {
-
+    return this->authorFirstName;
 }
 std::string Book::getAuthorLastName()
 {
-
+    return this->authorLastName;
 }
 Date Book::getDueDate()
 {
-
+    return this->dueDate;
 }
 void Book::setDueDate(Date dueDate)
 {
@@ -134,4 +147,3 @@ void Book::borrowBook(Member borrower, Date dueDate)
 {
 
 }
-

@@ -61,7 +61,7 @@ class Librarian : public Person
         void displayBorrowedBooks(int memberID);
         void calcFine(int memberID);
         int getStaffID();
-        int setStaffID();
+        int setStaffID(int staffID);
         int getSalary();
         void setSalary(int salary);
 };
