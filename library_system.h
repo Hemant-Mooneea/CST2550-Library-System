@@ -39,6 +39,7 @@ class Member : public Person
         int memberId;
         std::vector <Book*> booksLoaned;
     public:  
+        Member() = default; // remove this after
         Member(int memberId, std::string name, std::string address,
         std::string email);
         std::string getMemberID();
@@ -61,7 +62,7 @@ class Librarian : public Person
         void displayBorrowedBooks(int memberID);
         void calcFine(int memberID);
         int getStaffID();
-        int setStaffID(int staffID);
+        void setStaffID(int staffID);
         int getSalary();
         void setSalary(int salary);
 };

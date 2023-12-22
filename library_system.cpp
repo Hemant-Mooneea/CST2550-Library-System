@@ -63,7 +63,7 @@ int Librarian::getStaffID()
 {
     return this->staffId;
 }
-int Librarian::setStaffID(int staffID)
+void Librarian::setStaffID(int staffID)
 {
     this->staffId = staffID;
 }
@@ -79,6 +79,7 @@ void Librarian::setSalary(int salary)
 Member::Member(int memberId, std::string name, std::string address, 
 std::string email)
 {
+    
     this->memberId = memberId;
     setEmail(email);
     setAddress(address);
@@ -94,14 +95,13 @@ std::string Member::getMemberID()
 
 std::vector<Book *> Member::getBooksBorrowed()
 {
-
+    return this->booksLoaned;
 }
 
 void Member::setBooksBorrowed(Book book)
 {
 
 }
-
 //Methods for Book Class
 Book::Book(int bookID, std::string bookName, std::string authorFirstName, 
 std::string authorLastName)
@@ -122,7 +122,6 @@ std::string Book::getbookName()
 {
     return this->bookName;
 }
-
 std::string Book::getAuthorFirstName()
 {
     return this->authorFirstName;
