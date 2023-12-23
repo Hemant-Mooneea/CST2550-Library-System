@@ -201,15 +201,36 @@ std::string validateName(std::string name)
     return name;
 
 }
+std::string validateAddress(std::string address)
+{
+    bool doesNameWhitespaces;
+    do
+    {
+        std::cout << "Enter Your Address: ";
+        std::cin >> address;
+        
+        //checks for whitespaces such as "    "
+        doesNameWhitespaces = hasWhiteSpaces(address);
 
+        if (doesNameWhitespaces or address.length() == 0)
+        {
+            std::cout << "Name cannot be blank \n";
+        }
+    } while (doesNameWhitespaces);
+
+    return address;
+}
+std::string validateEmail(std::string email)
+{
+    return email;
+}
 Librarian createNewLibrarian(Librarian newLibrarian)
 {
     std::string name, address, email;
     int salary, staffID;
     std::cout << "Welcome Librarian! \n";
     name = validateName(name);
-    std::cout << "Enter Your Address: ";
-    std::cin >> address;
+    address = validateAddress(address);
     std::cout << "Enter Your Email: ";
     std::cin >> email;
     std::cout << "Enter Your Salary: ";
