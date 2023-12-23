@@ -98,9 +98,9 @@ std::vector<Book *> Member::getBooksBorrowed()
     return this->booksLoaned;
 }
 
-void Member::setBooksBorrowed(Book book)
+void Member::setBooksBorrowed(Book* book)
 {
-
+    this->booksLoaned.push_back(book);
 }
 //Methods for Book Class
 Book::Book(int bookID, std::string bookName, std::string authorFirstName, 

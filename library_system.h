@@ -44,7 +44,7 @@ class Member : public Person
         std::string email);
         std::string getMemberID();
         std::vector <Book*> getBooksBorrowed();
-        void setBooksBorrowed(Book book);  
+        void setBooksBorrowed(Book* book);  
         
 };
 
