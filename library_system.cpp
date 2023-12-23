@@ -167,8 +167,9 @@ bool hasWhiteSpaces(std::string str)
     bool check = std::all_of(str.begin(),str.end(),isspace);
     return check;
 }
-std::string validateName(std::string name)
+std::string validateName()
 {   
+    std::string name;
     bool doesNameDigits;
     bool doesNameWhitespaces;
     bool exitLoop;
@@ -201,8 +202,9 @@ std::string validateName(std::string name)
     return name;
 
 }
-std::string validateAddress(std::string address)
-{
+std::string validateAddress()
+{   
+    std::string address;
     bool doesNameWhitespaces;
     do
     {
@@ -220,19 +222,41 @@ std::string validateAddress(std::string address)
 
     return address;
 }
-std::string validateEmail(std::string email)
+std::string validateEmail()
 {
+    std::string email;
     return email;
 }
+/*
+int validateNumbers(std::string type, int number)
+{
+    bool doesNameWhitespaces;
+    do
+    {
+        std::cout << "Enter Your " + type + " :";
+        std::cin >> number;
+        
+        //checks for whitespaces such as "    "
+        doesNameWhitespaces = hasWhiteSpaces(address);
+
+        if (doesNameWhitespaces or address.length() == 0)
+        {
+            std::cout << "Name cannot be blank \n";
+        }
+    } while (doesNameWhitespaces);
+
+    return address;
+    return number;
+}
+*/
 Librarian createNewLibrarian(Librarian newLibrarian)
 {
     std::string name, address, email;
     int salary, staffID;
     std::cout << "Welcome Librarian! \n";
-    name = validateName(name);
-    address = validateAddress(address);
-    std::cout << "Enter Your Email: ";
-    std::cin >> email;
+    name = validateName();
+    address = validateAddress();
+    email = validateEmail();
     std::cout << "Enter Your Salary: ";
     std::cin >> salary;
     std::cout << "Enter Your StaffID: ";
@@ -251,6 +275,7 @@ int main()
 {
     Librarian newLibrarian;
     newLibrarian = createNewLibrarian(newLibrarian);
+    std::cout << newLibrarian.getName();
     return 1;
 
 }
