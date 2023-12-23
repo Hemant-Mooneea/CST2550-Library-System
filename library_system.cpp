@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "library_system.h"
 
 //Methods for Class Person
@@ -147,13 +148,66 @@ void Book::borrowBook(Member borrower, Date dueDate)
 
 }
 
+bool hasDigits(std::string str)
+{
+    bool check;
+    for (int i = 0; i < str.length(); i++)  
+    {
+        check = isdigit(str[i]);
+        if (check)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+bool hasWhiteSpaces(std::string str)
+{   
+    //iterates throughtout the string to check for a space
+    bool check = std::all_of(str.begin(),str.end(),isspace);
+    return check;
+}
+std::string validateName(std::string name)
+{   
+    bool doesNameDigits;
+    bool doesNameWhitespaces;
+    bool exitLoop;
+    do
+    {
+        doesNameDigits = true;
+        doesNameWhitespaces = false;
+        exitLoop = true;
+
+        std::cout << "Enter Your Name: ";
+        std::cin >> name;
+        
+        //checks for whitespaces such as "    "
+        doesNameWhitespaces = hasWhiteSpaces(name);
+        //checks if name has digits
+        doesNameDigits = hasDigits(name);
+        
+        if (doesNameWhitespaces or name.length() == 0)
+        {
+            std::cout << "Name cannot be blank \n";
+            exitLoop = false;
+        }
+        else if (!doesNameDigits)
+        {
+            std::cout << "Name cannot contain numbers \n";
+            exitLoop = false;
+        }
+    } while (!exitLoop);
+
+    return name;
+
+}
+
 Librarian createNewLibrarian(Librarian newLibrarian)
 {
     std::string name, address, email;
     int salary, staffID;
     std::cout << "Welcome Librarian! \n";
-    std::cout << "Enter Your Name: ";
-    std::cin >> name;
+    name = validateName(name);
     std::cout << "Enter Your Address: ";
     std::cin >> address;
     std::cout << "Enter Your Email: ";
