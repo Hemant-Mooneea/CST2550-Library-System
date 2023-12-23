@@ -146,3 +146,36 @@ void Book::borrowBook(Member borrower, Date dueDate)
 {
 
 }
+
+Librarian createNewLibrarian(Librarian newLibrarian)
+{
+    std::string name, address, email;
+    int salary, staffID;
+    std::cout << "Welcome Librarian! \n";
+    std::cout << "Enter Your Name: ";
+    std::cin >> name;
+    std::cout << "Enter Your Address: ";
+    std::cin >> address;
+    std::cout << "Enter Your Email: ";
+    std::cin >> email;
+    std::cout << "Enter Your Salary: ";
+    std::cin >> salary;
+    std::cout << "Enter Your StaffID: ";
+    std::cin >> staffID;
+
+    newLibrarian.setName(name);
+    newLibrarian.setAddress(address);
+    newLibrarian.setEmail(email);
+    newLibrarian.setSalary(salary);
+    newLibrarian.setStaffID(staffID);
+
+    return newLibrarian;
+}
+
+int main()
+{
+    Librarian newLibrarian;
+    newLibrarian = createNewLibrarian(newLibrarian);
+    return 1;
+
+}
