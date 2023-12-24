@@ -161,6 +161,20 @@ bool hasDigits(std::string str)
     }
     return true;
 }
+bool hasNonDigits(std::string str) 
+{
+    bool check;
+    for (int i = 0; i < str.length(); i++) 
+    {
+        check = isdigit(str[i]);
+        if (!check)
+        {
+            return true; 
+        }
+    }
+    return false;
+}
+
 bool hasWhiteSpaces(std::string str)
 {   
     //iterates throughtout the string to check for a space
@@ -227,28 +241,43 @@ std::string validateEmail()
     std::string email;
     return email;
 }
-/*
-int validateNumbers(std::string type, int number)
-{
+
+int validateNumbers(std::string type)
+{   
+    int number;
+    std::string tempNumber;
     bool doesNameWhitespaces;
+    bool doesNameDigits;
+    bool exitLoop;
     do
     {
+        doesNameDigits = false;
+        doesNameWhitespaces = false;
+        exitLoop = true;
+
         std::cout << "Enter Your " + type + " :";
-        std::cin >> number;
-        
+        std::cin >> tempNumber;
+
         //checks for whitespaces such as "    "
-        doesNameWhitespaces = hasWhiteSpaces(address);
-
-        if (doesNameWhitespaces or address.length() == 0)
+        doesNameWhitespaces = hasWhiteSpaces(tempNumber);
+        //checks for non digits 
+        doesNameDigits = hasNonDigits(tempNumber);
+        if (doesNameWhitespaces or tempNumber.length() == 0)
         {
-            std::cout << "Name cannot be blank \n";
+            std::cout << type +" cannot be blank \n";
+            exitLoop = false;
         }
-    } while (doesNameWhitespaces);
+        else if (doesNameDigits)
+        {   
+            std::cout << type + " can only contain numbers \n";
+            exitLoop = false;
+        }
 
-    return address;
+    } while (!exitLoop);
+    number = std::stoi(tempNumber);
     return number;
 }
-*/
+
 Librarian createNewLibrarian(Librarian newLibrarian)
 {
     std::string name, address, email;
@@ -257,10 +286,8 @@ Librarian createNewLibrarian(Librarian newLibrarian)
     name = validateName();
     address = validateAddress();
     email = validateEmail();
-    std::cout << "Enter Your Salary: ";
-    std::cin >> salary;
-    std::cout << "Enter Your StaffID: ";
-    std::cin >> staffID;
+    salary = validateNumbers("Salary");
+    staffID = validateNumbers("StaffID");
 
     newLibrarian.setName(name);
     newLibrarian.setAddress(address);
@@ -275,7 +302,6 @@ int main()
 {
     Librarian newLibrarian;
     newLibrarian = createNewLibrarian(newLibrarian);
-    std::cout << newLibrarian.getName();
     return 1;
 
 }
