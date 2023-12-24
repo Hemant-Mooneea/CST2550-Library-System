@@ -181,6 +181,18 @@ bool hasWhiteSpaces(std::string str)
     bool check = std::all_of(str.begin(),str.end(),isspace);
     return check;
 }
+bool hasAtSign(std::string str)
+{
+    bool check;
+    for (int i = 0; i < str.length(); i++) 
+    {
+        if (str[i] == '@')
+        {
+            return true; 
+        }
+    }
+    return false;
+}
 std::string validateName()
 {   
     std::string name;
@@ -239,6 +251,34 @@ std::string validateAddress()
 std::string validateEmail()
 {
     std::string email;
+    bool doesContainAtSign;
+    bool doesNameWhitespaces;
+    bool exitLoop;
+    do
+    {
+        doesContainAtSign = true;
+        doesNameWhitespaces = false;
+        exitLoop = true;
+
+        std::cout << "Enter Your Email: ";
+        std::cin >> email;
+        
+        //checks for whitespaces such as "    "
+        doesNameWhitespaces = hasWhiteSpaces(email);
+        //checks if name has digits
+        doesContainAtSign = hasAtSign(email);
+        
+        if (doesNameWhitespaces or email.length() == 0)
+        {
+            std::cout << "Email cannot be blank \n";
+            exitLoop = false;
+        }
+        else if (!doesContainAtSign)
+        {
+            std::cout << "Email needs @ sign \n";
+            exitLoop = false;
+        }
+    } while (!exitLoop);
     return email;
 }
 
