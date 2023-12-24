@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <fstream>
+#include <filesystem>
 #include "library_system.h"
 
 //Methods for Class Person
@@ -317,7 +319,38 @@ int validateNumbers(std::string type)
     number = std::stoi(tempNumber);
     return number;
 }
+std::string checkFilePath()
+{
+    std::string filePath;
+    bool checkFile;
+    do
+    {
+        std::cout << "Input the path to the Books file:\n";
+        std::cin >> filePath;
+        checkFile = std::filesystem::exists(filePath);  
+        if (!checkFile) 
+        {
+            std::cout << "File does not exist at path: " + filePath + "\n";
+        } 
+    } while (!checkFile);
+    return filePath;
+}
+void readBookFile()
+{
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
+    std::string filePath = checkFilePath();
 
+    std::ifstream file;
+    file.open(filePath);
+    std::string line;
+    std::getline(file, line);
+    while (std::getline(file, line)) 
+    {
+        std::cout << line << std::endl;
+    }
+    file.close();
+}
 Librarian createNewLibrarian(Librarian newLibrarian)
 {
     std::string name, address, email;
@@ -340,8 +373,10 @@ Librarian createNewLibrarian(Librarian newLibrarian)
 
 int main()
 {
-    Librarian newLibrarian;
-    newLibrarian = createNewLibrarian(newLibrarian);
-    return 1;
 
+    Librarian newLibrarian;
+    std::vector<Book> libraryBooks;
+    //newLibrarian = createNewLibrarian(newLibrarian);
+    readBookFile();
+    return 1;
 }
