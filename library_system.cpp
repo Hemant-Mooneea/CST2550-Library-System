@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <filesystem>
+#include <sstream>
 #include "library_system.h"
 
 //Methods for Class Person
@@ -179,10 +180,11 @@ bool hasNonDigits(std::string str)
 
 bool hasWhiteSpaces(std::string str)
 {   
-    //iterates throughtout the string to check for a space
+    //iterates throughtout the string to check if all characters are spaces
     bool check = std::all_of(str.begin(),str.end(),isspace);
     return check;
 }
+
 bool hasAtSign(std::string str)
 {
     bool check;
@@ -335,7 +337,57 @@ std::string checkFilePath()
     } while (!checkFile);
     return filePath;
 }
-void readBookFile()
+void extractBookData(std::string bookData[], std::string line)
+{   
+    int count;
+    std::string word = ""; 
+    std::string tempWord = "";
+
+    // used for breaking words 
+    std::stringstream s(line);
+
+    bool isWordComplete = true;
+
+    count = 0;
+    // seperates each word by using the comma and loops across each word
+    while (std::getline(s, word, ',')) 
+    { 
+        /*
+        The following  2 ifs statement are put into place to check for Books which
+        have commas in their title. Since the delimeter will break down the title
+        into different words eg("Rejection, The Ruling Spirit" will be split into
+        Rejection and The Ruling Spirit as 2 seperate words)
+        */
+
+        /* 
+        checking if the first part of the string is " which in the csv file 
+        indicates that a string contains a comma within it
+        */
+        if (word[0] == '"' || isWordComplete == false) 
+        {
+            tempWord = tempWord + word + ',';
+            isWordComplete = false;
+        }
+        /* 
+        checking if the last part of the string is "  meaning that the string is 
+        complete
+        */
+        if (word[word.length() - 1] == '"')
+        {   
+            // remove the extra comma
+            tempWord.erase(tempWord.length() - 1); 
+            word = tempWord;
+            isWordComplete = true;
+        }
+        
+        if (isWordComplete)
+        {
+            bookData[count] = word;
+            count++;
+        }
+    } 
+}
+void readBookFile(std::vector<Book>& libraryBooks)
 {
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
@@ -343,11 +395,24 @@ void readBookFile()
 
     std::ifstream file;
     file.open(filePath);
-    std::string line;
+    std::string line, word, bookData[5];
+
+    //getting the first line which does not contain book information
     std::getline(file, line);
+    //while loop continues until it reaches end of file
     while (std::getline(file, line)) 
     {
-        std::cout << line << std::endl;
+
+
+        extractBookData(bookData, line);
+        /*Book data in the index are as follows:
+        0 : BookID(being converted to integer using stoi)
+        1: BookName
+        3: Author First Name
+        4: Author LastName 
+        */
+        Book newBook(stoi(bookData[0]),bookData[1],bookData[3],bookData[4]);
+        libraryBooks.push_back(newBook);
     }
     file.close();
 }
@@ -377,6 +442,11 @@ int main()
     Librarian newLibrarian;
     std::vector<Book> libraryBooks;
     //newLibrarian = createNewLibrarian(newLibrarian);
-    readBookFile();
+    readBookFile(libraryBooks);
+    std::cout<<libraryBooks[1].getbookID() << std::endl;
+    std::cout<<libraryBooks[1].getAuthorFirstName()<< std::endl;
+    std::cout<<libraryBooks[1].getAuthorLastName()<< std::endl;
+    std::cout<<libraryBooks[1].getbookName()<< std::endl;
+    
     return 1;
 }
