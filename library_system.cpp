@@ -414,8 +414,9 @@ void readBookFile(std::vector<Book>& libraryBooks)
     }
     file.close();
 }
-Librarian createNewLibrarian(Librarian newLibrarian)
-{
+Librarian createNewLibrarian()
+{   
+    Librarian newLibrarian;
     std::string name, address, email;
     int salary, staffID;
     std::cout << "Welcome Librarian! \n";
@@ -433,8 +434,17 @@ Librarian createNewLibrarian(Librarian newLibrarian)
 
     return newLibrarian;
 }
-void createMember()
+Member createMember()
 {  
+    std::string name, address, email;
+    int memberID;
+    std::cout << "Enter Member Details: \n";
+    name = validateName();
+    address = validateAddress();
+    email = validateEmail();
+    memberID = validateNumbers("MemberID");
+    Member newMember(memberID, name, address, email);
+    return newMember;
 
 }
 void giveBook()
@@ -490,7 +500,7 @@ int main()
     Librarian newLibrarian;
     std::vector<Book> libraryBooks;
     std::vector<Member> libraryMembers;
-    //newLibrarian = createNewLibrarian(newLibrarian);
+    //newLibrarian = createNewLibrarian();
     //readBookFile(libraryBooks);
     librarianMenu(libraryMembers);
     return 1;
