@@ -402,8 +402,6 @@ void readBookFile(std::vector<Book>& libraryBooks)
     //while loop continues until it reaches end of file
     while (std::getline(file, line)) 
     {
-
-
         extractBookData(bookData, line);
         /*Book data in the index are as follows:
         0 : BookID(being converted to integer using stoi)
@@ -435,18 +433,65 @@ Librarian createNewLibrarian(Librarian newLibrarian)
 
     return newLibrarian;
 }
+void createMember()
+{  
 
+}
+void giveBook()
+{
+
+}
+void giveBackBook()
+{
+
+}
+void outputBorrowedBook()
+{
+
+}
+
+int librarianMenu(std::vector<Member>& libraryMembers)
+{   
+    char choice = '9';
+    do
+    {
+        // ANSI escape sequence for clearing the screen
+        std::cout << "\x1B[2J\x1B[H";
+        std::cout << "Enter a number to choose an option \n";
+        std::cout << "[1] Add a member \n";
+        std::cout << "[2] Issue a book to a member \n";
+        std::cout << "[3] Return a book \n";
+        std::cout << "[4] Display all books borrowed by any individual member \n";
+        std::cout << "[0] Exit \n";
+        std::cin >> choice;
+        
+        switch (choice)
+        {
+            case '1':
+                createMember();
+                break;
+            case '2':
+                giveBook();
+                break;
+            case '3':
+                giveBackBook();
+                break;
+            case '4':   
+                outputBorrowedBook();
+                break;
+        }
+
+    } while (choice != '0');
+    return 0;
+}
 int main()
 {
 
     Librarian newLibrarian;
     std::vector<Book> libraryBooks;
+    std::vector<Member> libraryMembers;
     //newLibrarian = createNewLibrarian(newLibrarian);
-    readBookFile(libraryBooks);
-    std::cout<<libraryBooks[1].getbookID() << std::endl;
-    std::cout<<libraryBooks[1].getAuthorFirstName()<< std::endl;
-    std::cout<<libraryBooks[1].getAuthorLastName()<< std::endl;
-    std::cout<<libraryBooks[1].getbookName()<< std::endl;
-    
+    //readBookFile(libraryBooks);
+    librarianMenu(libraryMembers);
     return 1;
 }
