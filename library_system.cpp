@@ -6,10 +6,19 @@
 #include <filesystem>
 #include <sstream>
 #include "library_system.h"
-// Global Variables used for storage of books and members
 
+// Global Variable used for storage of books
 std::vector<Book> libraryBooks;
+// Global Variable used for storage of members
 std::vector<Member> libraryMembers;
+// Global Variable used for new memberID
+int memberIDCounter = 0;
+
+// Function Declaration to be used in classes
+std::string validateName();
+std::string validateEmail();
+std::string validateAddress();
+
 //Methods for Class Person
 std::string Person::getName()
 {
@@ -47,8 +56,19 @@ std::string email, int salary)
     setEmail(email);
 }
 void Librarian::addMember()
-{
-
+{   
+    // Increasing the counter to prevent duplicate memberID
+    memberIDCounter ++;
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
+    
+    std::string name, address, email;
+    std::cout << "Enter Member Details: \n";
+    name = validateName();
+    address = validateAddress();
+    email = validateEmail();
+    Member newMember(memberIDCounter, name, address, email);
+    libraryMembers.push_back(newMember);
 }
 void Librarian::issueBook(int memberID, int bookID)
 {
@@ -442,19 +462,7 @@ Librarian createNewLibrarian()
 
     return newLibrarian;
 }
-Member createMember(int memberID)
-{  
-    // ANSI escape sequence for clearing the screen
-    std::cout << "\x1B[2J\x1B[H";
-    std::string name, address, email;
-    std::cout << "Enter Member Details: \n";
-    name = validateName();
-    address = validateAddress();
-    email = validateEmail();
-    Member newMember(memberID, name, address, email);
-    return newMember;
 
-}
 int findMemberIndex()
 {
     // ANSI escape sequence for clearing the screen
@@ -536,12 +544,23 @@ void outputBorrowedBook()
 {
 
 }
-
-int librarianMenu()
+void displayLatestMember()
+{
+    
+    std::string confirm;
+    int lastIndex = libraryMembers.size() - 1;
+    std::cout << "===New Member Details===\n";
+    std::cout << "Name: " + libraryMembers[lastIndex].getName() + "\n";
+    std::cout << "MemberID: " + libraryMembers[lastIndex].getMemberID() + "\n";
+    std::cout << "Address: " + libraryMembers[lastIndex].getAddress() + "\n";
+    std::cout << "Email: " + libraryMembers[lastIndex].getEmail() + "\n";
+    std::cout << "Type OK to continue \n";
+    std::cin >> confirm;
+    
+}
+int librarianMenu(Librarian newLibrarian)
 {   
     char choice = '9';
-    int memberIDCounter = 0;
-    std::string confirm;
     Member newMember;
     do
     {
@@ -558,16 +577,8 @@ int librarianMenu()
         switch (choice)
         {
             case '1':
-                memberIDCounter ++;
-                newMember = createMember(memberIDCounter);
-                libraryMembers.push_back(newMember);
-                std::cout << "===New Member Details===\n";
-                std::cout << "Name: " + newMember.getName() + "\n";
-                std::cout << "MemberID: " + newMember.getMemberID() + "\n";
-                std::cout << "Address: " + newMember.getAddress() + "\n";
-                std::cout << "Email: " + newMember.getEmail() + "\n";
-                std::cout << "Type OK to continue \n";
-                std::cin >> confirm;
+                newLibrarian.addMember();
+                displayLatestMember();
                 break;
             case '2':
                 giveBook();
@@ -587,8 +598,8 @@ int main()
 {
 
     Librarian newLibrarian;
-    //newLibrarian = createNewLibrarian();
+    newLibrarian = createNewLibrarian();
     readBookFile();
-    librarianMenu();
+    librarianMenu(newLibrarian);
     return 1;
 }
