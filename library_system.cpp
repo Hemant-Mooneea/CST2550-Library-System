@@ -6,6 +6,10 @@
 #include <filesystem>
 #include <sstream>
 #include "library_system.h"
+// Global Variables used for storage of books and members
+
+std::vector<Book> libraryBooks;
+std::vector<Member> libraryMembers;
 //Methods for Class Person
 std::string Person::getName()
 {
@@ -391,7 +395,7 @@ void extractBookData(std::string bookData[], std::string line)
         }
     } 
 }
-void readBookFile(std::vector<Book>& libraryBooks)
+void readBookFile()
 {
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
@@ -451,7 +455,7 @@ Member createMember(int memberID)
     return newMember;
 
 }
-int findMemberIndex(std::vector<Member>& libraryMembers)
+int findMemberIndex()
 {
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
@@ -480,7 +484,7 @@ int findMemberIndex(std::vector<Member>& libraryMembers)
     }
     return -1;
 }
-int findBookIndex(std::vector<Book>& libraryBooks)
+int findBookIndex()
 {   
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
@@ -510,23 +514,19 @@ int findBookIndex(std::vector<Book>& libraryBooks)
     }
     return -1;
 }
-void giveBook(std::vector<Member>& libraryMembers, 
-std::vector<Book>& libraryBooks)
+void giveBook()
 {
     int memberIndex, bookIndex;
-    memberIndex = findMemberIndex(libraryMembers);
+    memberIndex = findMemberIndex();
     if (memberIndex == -1)
     {
         return;
     }
-    bookIndex = findBookIndex(libraryBooks);
+    bookIndex = findBookIndex();
     if (bookIndex == -1)
     {
         return;
     }
-
-    
-    
 }
 void giveBackBook()
 {
@@ -537,8 +537,7 @@ void outputBorrowedBook()
 
 }
 
-int librarianMenu(std::vector<Member>& libraryMembers, 
-std::vector<Book>& libraryBooks)
+int librarianMenu()
 {   
     char choice = '9';
     int memberIDCounter = 0;
@@ -571,7 +570,7 @@ std::vector<Book>& libraryBooks)
                 std::cin >> confirm;
                 break;
             case '2':
-                giveBook(libraryMembers, libraryBooks);
+                giveBook();
                 break;
             case '3':
                 giveBackBook();
@@ -588,10 +587,8 @@ int main()
 {
 
     Librarian newLibrarian;
-    std::vector<Book> libraryBooks;
-    std::vector<Member> libraryMembers;
     //newLibrarian = createNewLibrarian();
-    readBookFile(libraryBooks);
-    librarianMenu(libraryMembers, libraryBooks);
+    readBookFile();
+    librarianMenu();
     return 1;
 }
