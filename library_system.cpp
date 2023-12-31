@@ -445,39 +445,42 @@ Member createMember(int memberID)
     return newMember;
 
 }
-bool checkMember(std::string memberName, std::vector<Member>& libraryMembers)
+int findIndexMember(std::vector<Member>& libraryMembers)
 {
-    for(int i = 0; i < libraryMembers.size(); i++)
+    std::string memberName;
+    while (true)
     {
-        if (libraryMembers[i].getName() == memberName)
+        std::cout << "Enter member name (Type EXIT to go back): ";
+        std::cin >> memberName;
+
+        if (memberName == "EXIT") 
         {
-            return true;
+            return -1; 
         }
+
+        bool found = false;
+        for (int i = 0; i < libraryMembers.size(); i++) 
+        {
+            if (libraryMembers[i].getName() == memberName) 
+            {
+                return i;
+            }
+        }
+
+        std::cout << "Member Not Found!\n";
     }
-    return false;
+    return -1;
 }
 void giveBook(std::vector<Member>& libraryMembers, 
 std::vector<Book>& libraryBooks)
 {
-    std::string memberName, bookName;
-    bool check;
-    do
+    int memberIndex;
+    memberIndex = findIndexMember(libraryMembers);
+    if (memberIndex == -1)
     {
-        check = true;
-        std::cout << "Enter member name: ";
-        std::cin >> memberName;
-        if (memberName == "EXIT")
-        {
-            break;
-        }
-        check = checkMember(memberName, libraryMembers);
-        if (!check)
-        {
-            std::cout << "Member Not Found!\n";
-            std::cout << "Type EXIT to go back\n";
-        }
-        
-    } while (!check);
+        return;
+    }
+    
     
 }
 void giveBackBook()
