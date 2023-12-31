@@ -463,6 +463,7 @@ void outputBorrowedBook()
 int librarianMenu(std::vector<Member>& libraryMembers)
 {   
     char choice = '9';
+    Member newMember;
     do
     {
         // ANSI escape sequence for clearing the screen
@@ -478,7 +479,8 @@ int librarianMenu(std::vector<Member>& libraryMembers)
         switch (choice)
         {
             case '1':
-                createMember();
+                newMember = createMember();
+                libraryMembers.push_back(newMember);
                 break;
             case '2':
                 giveBook();
