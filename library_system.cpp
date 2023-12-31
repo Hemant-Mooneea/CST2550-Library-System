@@ -6,7 +6,6 @@
 #include <filesystem>
 #include <sstream>
 #include "library_system.h"
-
 //Methods for Class Person
 std::string Person::getName()
 {
@@ -355,7 +354,8 @@ void extractBookData(std::string bookData[], std::string line)
         /*
         The following  2 ifs statement are put into place to check for Books which
         have commas in their title. Since the delimeter will break down the title
-        into different words eg("Rejection, The Ruling Spirit" will be split into
+        into different words.
+        eg("Rejection, The Ruling Spirit" will be split into
         Rejection and The Ruling Spirit as 2 seperate words)
         */
 
@@ -434,22 +434,51 @@ Librarian createNewLibrarian()
 
     return newLibrarian;
 }
-Member createMember()
+Member createMember(int memberID)
 {  
     std::string name, address, email;
-    int memberID;
     std::cout << "Enter Member Details: \n";
     name = validateName();
     address = validateAddress();
     email = validateEmail();
-    memberID = validateNumbers("MemberID");
     Member newMember(memberID, name, address, email);
     return newMember;
 
 }
-void giveBook()
+bool checkMember(std::string memberName, std::vector<Member>& libraryMembers)
 {
-
+    for(int i = 0; i < libraryMembers.size(); i++)
+    {
+        if (libraryMembers[i].getName() == memberName)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+void giveBook(std::vector<Member>& libraryMembers, 
+std::vector<Book>& libraryBooks)
+{
+    std::string memberName, bookName;
+    bool check;
+    do
+    {
+        check = true;
+        std::cout << "Enter member name: ";
+        std::cin >> memberName;
+        if (memberName == "EXIT")
+        {
+            break;
+        }
+        check = checkMember(memberName, libraryMembers);
+        if (!check)
+        {
+            std::cout << "Member Not Found!\n";
+            std::cout << "Type EXIT to go back\n";
+        }
+        
+    } while (!check);
+    
 }
 void giveBackBook()
 {
@@ -460,9 +489,12 @@ void outputBorrowedBook()
 
 }
 
-int librarianMenu(std::vector<Member>& libraryMembers)
+int librarianMenu(std::vector<Member>& libraryMembers, 
+std::vector<Book>& libraryBooks)
 {   
     char choice = '9';
+    int memberIDCounter = 0;
+    std::string confirm;
     Member newMember;
     do
     {
@@ -474,16 +506,24 @@ int librarianMenu(std::vector<Member>& libraryMembers)
         std::cout << "[3] Return a book \n";
         std::cout << "[4] Display all books borrowed by any individual member \n";
         std::cout << "[0] Exit \n";
+        std::cout << "Option: ";
         std::cin >> choice;
-        
         switch (choice)
         {
             case '1':
-                newMember = createMember();
+                memberIDCounter ++;
+                newMember = createMember(memberIDCounter);
                 libraryMembers.push_back(newMember);
+                std::cout << "===New Member Details===\n";
+                std::cout << "Name: " + newMember.getName() + "\n";
+                std::cout << "MemberID: " + newMember.getMemberID() + "\n";
+                std::cout << "Address: " + newMember.getAddress() + "\n";
+                std::cout << "Email: " + newMember.getEmail() + "\n";
+                std::cout << "Type OK to continue \n";
+                std::cin >> confirm;
                 break;
             case '2':
-                giveBook();
+                giveBook(libraryMembers, libraryBooks);
                 break;
             case '3':
                 giveBackBook();
@@ -504,6 +544,6 @@ int main()
     std::vector<Member> libraryMembers;
     //newLibrarian = createNewLibrarian();
     //readBookFile(libraryBooks);
-    librarianMenu(libraryMembers);
+    librarianMenu(libraryMembers, libraryBooks);
     return 1;
 }
