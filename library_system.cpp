@@ -352,11 +352,8 @@ void extractBookData(std::string bookData[], std::string line)
     while (std::getline(s, word, ',')) 
     { 
         /*
-        The following  2 ifs statement are put into place to check for Books which
-        have commas in their title. Since the delimeter will break down the title
-        into different words.
-        eg("Rejection, The Ruling Spirit" will be split into
-        Rejection and The Ruling Spirit as 2 seperate words)
+        The following  2 ifs statement are put into place to check for Books
+        which have commas in their title.
         */
 
         /* 
@@ -382,6 +379,13 @@ void extractBookData(std::string bookData[], std::string line)
         
         if (isWordComplete)
         {
+            //removing "" from book titles which have them
+            if (word[0] == '"') 
+            {
+                word.erase(word.begin());
+                word.erase(word.end() - 1);
+                
+            }
             bookData[count] = word;
             count++;
         }
@@ -436,6 +440,8 @@ Librarian createNewLibrarian()
 }
 Member createMember(int memberID)
 {  
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
     std::string name, address, email;
     std::cout << "Enter Member Details: \n";
     name = validateName();
@@ -445,8 +451,11 @@ Member createMember(int memberID)
     return newMember;
 
 }
-int findIndexMember(std::vector<Member>& libraryMembers)
+int findMemberIndex(std::vector<Member>& libraryMembers)
 {
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
+
     std::string memberName;
     while (true)
     {
@@ -471,12 +480,15 @@ int findIndexMember(std::vector<Member>& libraryMembers)
     }
     return -1;
 }
-int findIndexBook(std::vector<Book>& libraryBooks)
-{
-        std::string bookName;
+int findBookIndex(std::vector<Book>& libraryBooks)
+{   
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
+
+    std::string bookName;
     while (true)
     {
-        std::cout << "Enter member name (Type EXIT to go back): ";
+        std::cout << "Enter book name (Type EXIT to go back): ";
         std::cin >>  bookName;
 
         if (bookName == "EXIT") 
@@ -487,6 +499,7 @@ int findIndexBook(std::vector<Book>& libraryBooks)
         bool found = false;
         for (int i = 0; i < libraryBooks.size(); i++) 
         {
+            std::cout << libraryBooks[i].getbookName() << std::endl;
             if (libraryBooks[i].getbookName() == bookName) 
             {
                 return i;
@@ -500,12 +513,18 @@ int findIndexBook(std::vector<Book>& libraryBooks)
 void giveBook(std::vector<Member>& libraryMembers, 
 std::vector<Book>& libraryBooks)
 {
-    int memberIndex;
-    memberIndex = findIndexMember(libraryMembers);
+    int memberIndex, bookIndex;
+    memberIndex = findMemberIndex(libraryMembers);
     if (memberIndex == -1)
     {
         return;
     }
+    bookIndex = findBookIndex(libraryBooks);
+    if (bookIndex == -1)
+    {
+        return;
+    }
+
     
     
 }
@@ -572,7 +591,7 @@ int main()
     std::vector<Book> libraryBooks;
     std::vector<Member> libraryMembers;
     //newLibrarian = createNewLibrarian();
-    //readBookFile(libraryBooks);
+    readBookFile(libraryBooks);
     librarianMenu(libraryMembers, libraryBooks);
     return 1;
 }
