@@ -471,6 +471,32 @@ int findIndexMember(std::vector<Member>& libraryMembers)
     }
     return -1;
 }
+int findIndexBook(std::vector<Book>& libraryBooks)
+{
+        std::string bookName;
+    while (true)
+    {
+        std::cout << "Enter member name (Type EXIT to go back): ";
+        std::cin >>  bookName;
+
+        if (bookName == "EXIT") 
+        {
+            return -1; 
+        }
+
+        bool found = false;
+        for (int i = 0; i < libraryBooks.size(); i++) 
+        {
+            if (libraryBooks[i].getbookName() == bookName) 
+            {
+                return i;
+            }
+        }
+
+        std::cout << "Book Not Found!\n";
+    }
+    return -1;
+}
 void giveBook(std::vector<Member>& libraryMembers, 
 std::vector<Book>& libraryBooks)
 {
