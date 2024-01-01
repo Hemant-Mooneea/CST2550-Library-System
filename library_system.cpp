@@ -14,10 +14,6 @@ std::vector<Member> libraryMembers;
 // Global Variable used for new memberID
 int memberIDCounter = 0;
 
-// Function Declaration to be used in classes
-std::string validateName();
-std::string validateEmail();
-std::string validateAddress();
 
 //Methods for Class Person
 std::string Person::getName()
@@ -71,8 +67,7 @@ void Librarian::addMember()
     libraryMembers.push_back(newMember);
 }
 void Librarian::issueBook(int memberID, int bookID)
-{
-
+{   
 }
 void Librarian::returnBook(int memberID, int bookID)
 {
@@ -462,87 +457,74 @@ Librarian createNewLibrarian()
 
     return newLibrarian;
 }
-
-int findMemberIndex()
+int checkBookID()
 {
+    bool check;
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
+    std::string inputBookID;
+    do
+    {   
+        check = false;
 
-    std::string memberName;
-    while (true)
-    {
-        std::cout << "Enter member name (Type EXIT to go back): ";
-        std::cin >> memberName;
+        std::cout << "Input BookID(Enter 0 to exit): ";
+        std::cin >> inputBookID;
 
-        if (memberName == "EXIT") 
+        if (inputBookID == "0")
         {
-            return -1; 
+            break;
         }
 
-        bool found = false;
-        for (int i = 0; i < libraryMembers.size(); i++) 
-        {
-            if (libraryMembers[i].getName() == memberName) 
+        for (int i = 0 ; i < libraryBooks.size(); i++)
+        {   
+            if (inputBookID == libraryBooks[i].getbookID())
             {
-                return i;
+                check = true;
+                std::cout<<libraryBooks[i].getbookName();
+                break;
             }
         }
+        if (!check)
+        {
+            std::cout << "Book Does Not Exist!\n";
+        }
 
-        std::cout << "Member Not Found!\n";
-    }
-    return -1;
+    } while (!check);
+    return stoi(inputBookID);
 }
-int findBookIndex()
+int checkMemberID()
 {   
+    bool check;
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
+    std::string inputMemberID;
+    do
+    {   
+        check = false;
 
-    std::string bookName;
-    while (true)
-    {
-        std::cout << "Enter book name (Type EXIT to go back): ";
-        std::cin >>  bookName;
-
-        if (bookName == "EXIT") 
+        std::cout << "Input MemberID(Enter 0 to exit): ";
+        std::cin >> inputMemberID;
+        if (inputMemberID == "0")
         {
-            return -1; 
+            break;
         }
 
-        bool found = false;
-        for (int i = 0; i < libraryBooks.size(); i++) 
-        {
-            std::cout << libraryBooks[i].getbookName() << std::endl;
-            if (libraryBooks[i].getbookName() == bookName) 
+        for (int i = 0 ; i < libraryMembers.size(); i++)
+        {   
+            if (inputMemberID == libraryMembers[i].getMemberID())
             {
-                return i;
+                check = true;
+                std::cout << libraryMembers[i].getName();
+                break;
             }
         }
+        if (!check)
+        {
+            std::cout << "Member Does Not Exist!\n";
+        }
 
-        std::cout << "Book Not Found!\n";
-    }
-    return -1;
-}
-void giveBook()
-{
-    int memberIndex, bookIndex;
-    memberIndex = findMemberIndex();
-    if (memberIndex == -1)
-    {
-        return;
-    }
-    bookIndex = findBookIndex();
-    if (bookIndex == -1)
-    {
-        return;
-    }
-}
-void giveBackBook()
-{
-
-}
-void outputBorrowedBook()
-{
-
+    } while (!check);
+    return stoi(inputMemberID);
 }
 void displayLatestMember()
 {
@@ -558,21 +540,27 @@ void displayLatestMember()
     std::cin >> confirm;
     
 }
+void displayMenuOptions()
+{
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
+    std::cout << "Enter a number to choose an option \n";
+    std::cout << "[1] Add a member \n";
+    std::cout << "[2] Issue a book to a member \n";
+    std::cout << "[3] Return a book \n";
+    std::cout << "[4] Display all books borrowed by a member \n";
+    std::cout << "[0] Exit \n";
+    std::cout << "Option: ";
+}
+
 int librarianMenu(Librarian newLibrarian)
 {   
     char choice = '9';
+    int memberID, bookID;
     Member newMember;
     do
-    {
-        // ANSI escape sequence for clearing the screen
-        std::cout << "\x1B[2J\x1B[H";
-        std::cout << "Enter a number to choose an option \n";
-        std::cout << "[1] Add a member \n";
-        std::cout << "[2] Issue a book to a member \n";
-        std::cout << "[3] Return a book \n";
-        std::cout << "[4] Display all books borrowed by any individual member \n";
-        std::cout << "[0] Exit \n";
-        std::cout << "Option: ";
+    {   
+        displayMenuOptions();
         std::cin >> choice;
         switch (choice)
         {
@@ -581,13 +569,22 @@ int librarianMenu(Librarian newLibrarian)
                 displayLatestMember();
                 break;
             case '2':
-                giveBook();
+                memberID = checkMemberID();
+                if (memberID != 0)
+                {
+                    bookID = checkBookID();
+                    if (bookID != 0)
+                    {
+                        newLibrarian.issueBook(memberID, bookID);
+                    }
+                }
+
                 break;
             case '3':
-                giveBackBook();
+
                 break;
             case '4':   
-                outputBorrowedBook();
+
                 break;
         }
 

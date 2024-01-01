@@ -10,6 +10,13 @@ class Person;
 class Librarian;
 class Member;
 
+// function declaration to avoid referencing errors
+std::string validateName();
+std::string validateEmail();
+std::string validateAddress();
+int checkBookID();
+int checkMemberID();
+
 struct Date 
 {
     //unsigned used to prevent negative numbers
