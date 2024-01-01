@@ -68,9 +68,11 @@ void Librarian::addMember()
 }
 void Librarian::issueBook(int memberID, int bookID)
 {   
-    Book borrowedBook = libraryBooks[bookID-1];
-    libraryMembers[memberID-1].setBooksBorrowed(borrowedBook);
-
+    // decrement memberID and bookID since vector starts at index 0
+    memberID --;
+    bookID --;
+    libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
+    libraryBooks[bookID].setDueDate(getCurrentDate("Three Days"));
 }
 void Librarian::returnBook(int memberID, int bookID)
 {
@@ -118,7 +120,7 @@ std::string Member::getMemberID()
     return memberIdString;
 }
 
-std::vector<Book> Member::getBooksBorrowed()
+std::vector<Book>Member::getBooksBorrowed()
 {
     return this->booksLoaned;
 }
@@ -591,6 +593,29 @@ int librarianMenu(Librarian newLibrarian)
 
     } while (choice != '0');
     return 0;
+}
+Date getCurrentDate(std::string type) 
+{   
+    int secondInThreeDays = 259200;
+    std::time_t currentTime;
+    if (type == "Today")
+    {
+        std::time_t currentTime = std::time(nullptr);
+    }
+    else if (type == "Three Days")
+    {   
+        // Add three days in seconds
+        std::time_t currentTime = std::time(nullptr) + secondInThreeDays; 
+    }
+
+    std::tm* currentDate = std::localtime(&currentTime);
+
+    Date current_date;
+    current_date.year = currentDate->tm_year + 1900;
+    current_date.month = currentDate->tm_mon + 1;
+    current_date.day = currentDate->tm_mday;
+
+    return current_date;
 }
 int main()
 {

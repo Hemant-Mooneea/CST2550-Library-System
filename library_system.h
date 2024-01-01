@@ -10,12 +10,16 @@ class Person;
 class Librarian;
 class Member;
 
+// structure declaration to avoid referencing errors
+struct Date;
+
 // function declaration to avoid referencing errors
 std::string validateName();
 std::string validateEmail();
 std::string validateAddress();
+Date getCurrentDate();
 int checkBookID();
-int check();
+int checkMemberID();
 
 struct Date 
 {
