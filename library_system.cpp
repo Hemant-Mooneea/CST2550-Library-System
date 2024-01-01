@@ -68,6 +68,9 @@ void Librarian::addMember()
 }
 void Librarian::issueBook(int memberID, int bookID)
 {   
+    Book borrowedBook = libraryBooks[bookID-1];
+    libraryMembers[memberID-1].setBooksBorrowed(borrowedBook);
+
 }
 void Librarian::returnBook(int memberID, int bookID)
 {
@@ -115,12 +118,12 @@ std::string Member::getMemberID()
     return memberIdString;
 }
 
-std::vector<Book *> Member::getBooksBorrowed()
+std::vector<Book> Member::getBooksBorrowed()
 {
     return this->booksLoaned;
 }
 
-void Member::setBooksBorrowed(Book* book)
+void Member::setBooksBorrowed(Book book)
 {
     this->booksLoaned.push_back(book);
 }
@@ -478,9 +481,8 @@ int checkBookID()
         for (int i = 0 ; i < libraryBooks.size(); i++)
         {   
             if (inputBookID == libraryBooks[i].getbookID())
-            {
+            {   
                 check = true;
-                std::cout<<libraryBooks[i].getbookName();
                 break;
             }
         }
@@ -514,7 +516,6 @@ int checkMemberID()
             if (inputMemberID == libraryMembers[i].getMemberID())
             {
                 check = true;
-                std::cout << libraryMembers[i].getName();
                 break;
             }
         }

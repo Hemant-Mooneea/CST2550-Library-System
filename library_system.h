@@ -15,7 +15,7 @@ std::string validateName();
 std::string validateEmail();
 std::string validateAddress();
 int checkBookID();
-int checkMemberID();
+int check();
 
 struct Date 
 {
@@ -44,14 +44,14 @@ class Member : public Person
 {
     private:
         int memberId;
-        std::vector <Book*> booksLoaned;
+        std::vector <Book> booksLoaned;
     public:  
         Member() = default; 
         Member(int memberId, std::string name, std::string address,
         std::string email);
         std::string getMemberID();
-        std::vector <Book*> getBooksBorrowed();
-        void setBooksBorrowed(Book* book);  
+        std::vector <Book> getBooksBorrowed();
+        void setBooksBorrowed(Book book);  
         
 };
 
