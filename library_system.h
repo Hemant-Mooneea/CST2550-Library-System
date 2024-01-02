@@ -17,7 +17,7 @@ struct Date;
 std::string validateName();
 std::string validateEmail();
 std::string validateAddress();
-Date getCurrentDate();
+Date getCurrentDate(std::string type);
 int checkBookID();
 int checkMemberID();
 

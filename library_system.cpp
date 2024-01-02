@@ -71,20 +71,49 @@ void Librarian::issueBook(int memberID, int bookID)
     // decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
+    Date dueDate = libraryBooks[bookID].getDueDate();
+    if (dueDate.day != 0)
+    {
+        std::cout << "This book is not available!\n";
+        return;
+    }
     libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
     libraryBooks[bookID].setDueDate(getCurrentDate("Three Days"));
+    std::cout << "Book has been issued!\n";
 }
 void Librarian::returnBook(int memberID, int bookID)
 {
+    // decrement memberID and bookID since vector starts at index 0
+    memberID --;
+    bookID --;
 
 }
 void Librarian::displayBorrowedBooks(int memberID)
 {
+    // decrement memberID since vector starts at index 0
+    memberID --;
+    std::vector <Book> currentMemberBooks;
 
+    std::cout << "Books borrowed by " + libraryMembers[memberID].getName() <<
+    std::endl;
+    
+    currentMemberBooks = libraryMembers[memberID].getBooksBorrowed();
+    
+    if(currentMemberBooks.size() == 0)
+    {
+        std::cout << "Member has no books borrowed!\n";
+        return;
+    }
+
+    for (int i = 0; i < currentMemberBooks.size(); i++)
+    {
+        std::cout<<currentMemberBooks[i].getbookName() << std::endl;
+    }
 }
 void Librarian::calcFine(int memberID)
 {
-
+    // decrement memberID since vector starts at index 0
+    memberID --;
 }
 int Librarian::getStaffID()
 {
@@ -167,11 +196,22 @@ void Book::setDueDate(Date dueDate)
 }
 void Book::returnBook()
 {
+    Date emptyDate;
+    
+    this->borrower.setName("");
+    this->borrower.setAddress("");
+    this->borrower.setEmail("");
+    
+    emptyDate.year = 0;
+    emptyDate.day = 0;
+    emptyDate.month = 0;
+    setDueDate(emptyDate);
 
 }
 void Book::borrowBook(Member borrower, Date dueDate)
 {
-
+    this->borrower = borrower;
+    setDueDate(dueDate);
 }
 
 bool hasDigits(std::string str)
@@ -375,11 +415,6 @@ void extractBookData(std::string bookData[], std::string line)
     // seperates each word by using the comma and loops across each word
     while (std::getline(s, word, ',')) 
     { 
-        /*
-        The following  2 ifs statement are put into place to check for Books
-        which have commas in their title.
-        */
-
         /* 
         checking if the first part of the string is " which in the csv file 
         indicates that a string contains a comma within it
@@ -529,19 +564,21 @@ int checkMemberID()
     } while (!check);
     return stoi(inputMemberID);
 }
+void confirmInput()
+{   
+    std::string confirm;
+    std::cout << "Type OK to continue \n";
+    std::cin >> confirm;
+}
 void displayLatestMember()
 {
     
-    std::string confirm;
     int lastIndex = libraryMembers.size() - 1;
     std::cout << "===New Member Details===\n";
     std::cout << "Name: " + libraryMembers[lastIndex].getName() + "\n";
     std::cout << "MemberID: " + libraryMembers[lastIndex].getMemberID() + "\n";
     std::cout << "Address: " + libraryMembers[lastIndex].getAddress() + "\n";
     std::cout << "Email: " + libraryMembers[lastIndex].getEmail() + "\n";
-    std::cout << "Type OK to continue \n";
-    std::cin >> confirm;
-    
 }
 void displayMenuOptions()
 {
@@ -570,6 +607,7 @@ int librarianMenu(Librarian newLibrarian)
             case '1':
                 newLibrarian.addMember();
                 displayLatestMember();
+                confirmInput();
                 break;
             case '2':
                 memberID = checkMemberID();
@@ -579,33 +617,48 @@ int librarianMenu(Librarian newLibrarian)
                     if (bookID != 0)
                     {
                         newLibrarian.issueBook(memberID, bookID);
+                        confirmInput();
                     }
                 }
 
                 break;
             case '3':
-
+                memberID = checkMemberID();
+                if (memberID != 0)
+                {
+                    bookID = checkBookID();
+                    if (bookID != 0)
+                    {
+                        newLibrarian.returnBook(memberID, bookID);
+                        confirmInput();
+                    }
+                }
                 break;
-            case '4':   
-
+            case '4':
+                memberID = checkMemberID();
+                if (memberID != 0)
+                {
+                    newLibrarian.displayBorrowedBooks(memberID);
+                    confirmInput();
+                }
                 break;
         }
 
     } while (choice != '0');
     return 0;
 }
-Date getCurrentDate(std::string type) 
-{   
+Date getCurrentDate(std::string type)
+ {
     int secondInThreeDays = 259200;
     std::time_t currentTime;
-    if (type == "Today")
+
+    if (type == "Today") 
     {
-        std::time_t currentTime = std::time(nullptr);
-    }
-    else if (type == "Three Days")
-    {   
-        // Add three days in seconds
-        std::time_t currentTime = std::time(nullptr) + secondInThreeDays; 
+        currentTime = std::time(nullptr);
+    } 
+    else if (type == "Three Days") 
+    {
+        currentTime = std::time(nullptr) + secondInThreeDays;
     }
 
     std::tm* currentDate = std::localtime(&currentTime);
@@ -617,6 +670,7 @@ Date getCurrentDate(std::string type)
 
     return current_date;
 }
+
 int main()
 {
 
