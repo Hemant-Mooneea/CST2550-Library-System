@@ -27,6 +27,7 @@ struct Date
     unsigned year;
     unsigned month;
     unsigned day;
+    std::string dateFormatted;
 };
 
 class Person

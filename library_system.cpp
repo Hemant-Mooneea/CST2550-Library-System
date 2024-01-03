@@ -77,8 +77,8 @@ void Librarian::issueBook(int memberID, int bookID)
         std::cout << "This book is not available!\n";
         return;
     }
-    libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
     libraryBooks[bookID].setDueDate(getCurrentDate("Three Days"));
+    libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
     std::cout << "Book has been issued!\n";
 }
 void Librarian::returnBook(int memberID, int bookID)
@@ -93,6 +93,7 @@ void Librarian::displayBorrowedBooks(int memberID)
     // decrement memberID since vector starts at index 0
     memberID --;
     std::vector <Book> currentMemberBooks;
+    Date dueDate;
 
     std::cout << "Books borrowed by " + libraryMembers[memberID].getName() <<
     std::endl;
@@ -106,8 +107,10 @@ void Librarian::displayBorrowedBooks(int memberID)
     }
 
     for (int i = 0; i < currentMemberBooks.size(); i++)
-    {
-        std::cout<<currentMemberBooks[i].getbookName() << std::endl;
+    {   
+        dueDate = currentMemberBooks[i].getDueDate();
+        std::cout << currentMemberBooks[i].getbookName() +"\n" +
+        "Date Of Return: " + dueDate.dateFormatted << std::endl;
     }
 }
 void Librarian::calcFine(int memberID)
@@ -166,6 +169,7 @@ std::string authorLastName)
     this->bookName = bookName;
     this->authorFirstName = authorFirstName;
     this->authorLastName = authorLastName;
+    this->returnBook();
 }
 std::string Book::getbookID()
 {
@@ -205,6 +209,7 @@ void Book::returnBook()
     emptyDate.year = 0;
     emptyDate.day = 0;
     emptyDate.month = 0;
+    emptyDate.dateFormatted = "";
     setDueDate(emptyDate);
 
 }
@@ -667,7 +672,9 @@ Date getCurrentDate(std::string type)
     current_date.year = currentDate->tm_year + 1900;
     current_date.month = currentDate->tm_mon + 1;
     current_date.day = currentDate->tm_mday;
-
+    current_date.dateFormatted = std::to_string(current_date.day) + '/' +
+                                 std::to_string(current_date.month) + '/' +
+                                 std::to_string(current_date.year);
     return current_date;
 }
 
