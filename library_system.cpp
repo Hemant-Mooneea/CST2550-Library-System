@@ -86,7 +86,27 @@ void Librarian::returnBook(int memberID, int bookID)
     // decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
+    std::vector<Book>& borrowedBooks 
+    = libraryMembers[memberID].getBooksBorrowed();
+    
+    if (borrowedBooks.size() == 0)
+    {
+        std::cout << "Member has no books borrowed!\n";
+        return;
+    }
 
+    libraryBooks[bookID].returnBook();
+    
+    for (int i = 0; i < borrowedBooks.size(); i++)
+    {
+        if (libraryBooks[bookID].getbookID() == borrowedBooks[i].getbookID())
+        {
+            borrowedBooks.erase(borrowedBooks.begin() + i);
+            std::cout << "Book has been returned!\n";
+            return;
+        }
+    }
+    std::cout << "Member did not borrow that book!\n";
 }
 void Librarian::displayBorrowedBooks(int memberID)
 {
@@ -117,6 +137,7 @@ void Librarian::calcFine(int memberID)
 {
     // decrement memberID since vector starts at index 0
     memberID --;
+
 }
 int Librarian::getStaffID()
 {
@@ -152,15 +173,24 @@ std::string Member::getMemberID()
     return memberIdString;
 }
 
-std::vector<Book>Member::getBooksBorrowed()
+std::vector<Book>& Member::getBooksBorrowed()
 {
     return this->booksLoaned;
 }
 
 void Member::setBooksBorrowed(Book book)
-{
+{   
+    // checks if vector is empty and if so store the book.
+    if (booksLoaned.size() == 0)
+    {
+        this->booksLoaned.push_back(book);
+        return;
+    }
+
     this->booksLoaned.push_back(book);
+
 }
+
 //Methods for Book Class
 Book::Book(int bookID, std::string bookName, std::string authorFirstName, 
 std::string authorLastName)

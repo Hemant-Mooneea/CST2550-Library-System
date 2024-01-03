@@ -55,7 +55,7 @@ class Member : public Person
         Member(int memberId, std::string name, std::string address,
         std::string email);
         std::string getMemberID();
-        std::vector <Book> getBooksBorrowed();
+        std::vector <Book>& getBooksBorrowed();
         void setBooksBorrowed(Book book);  
         
 };
