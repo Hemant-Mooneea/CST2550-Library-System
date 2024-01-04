@@ -149,10 +149,19 @@ void Librarian::calcFine(int memberID)
     Book tempBook = libraryMembers[memberID].getBooksBorrowed().back();
     // obtaining the due date of the book we need
     Date dueDate = tempBook.getDueDate();
+    // variable to store the difference in days between 2 dates
     int differenceInDays = getDifferenceInDays(currentDate, dueDate);
-
-
     
+    if (differenceInDays <= 0 )
+    {
+        std::cout << "Book returned on time, no fines!";
+    }  
+    else
+    {   
+        std::cout << "Fines are due: £" + differenceInDays;
+    }
+    confirmInput();
+
 }
 int Librarian::getStaffID()
 {
@@ -708,7 +717,7 @@ int getDifferenceInDays(Date currentDate, Date dueDate)
     // convert dueDate to time_t
     time_t dueDateTime = mktime(&dueDateTm);
     // get difference in seconds between current time and due time
-    double difference = difftime(currentDateTime,dueDateTime);
+    double difference = difftime(currentDateTime, dueDateTime);
     // convert seconds to days
     int days = difference / (60 * 60 * 24);
     
