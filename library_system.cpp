@@ -5,7 +5,9 @@
 #include <fstream>
 #include <filesystem>
 #include <sstream>
+#include <ctime>
 #include "library_system.h"
+
 
 // Global Variable used for storage of books
 std::vector<Book> libraryBooks;
@@ -86,6 +88,7 @@ void Librarian::returnBook(int memberID, int bookID)
     // decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
+    Book tempBook;
     std::vector<Book>& borrowedBooks 
     = libraryMembers[memberID].getBooksBorrowed();
     
@@ -95,12 +98,16 @@ void Librarian::returnBook(int memberID, int bookID)
         return;
     }
 
-    libraryBooks[bookID].returnBook();
-    
     for (int i = 0; i < borrowedBooks.size(); i++)
     {
         if (libraryBooks[bookID].getbookID() == borrowedBooks[i].getbookID())
-        {
+        {   
+            tempBook = libraryBooks[bookID];    
+            borrowedBooks.push_back(tempBook);
+            this->calcFine(memberID);
+            borrowedBooks.pop_back();
+
+            libraryBooks[bookID].returnBook();
             borrowedBooks.erase(borrowedBooks.begin() + i);
             std::cout << "Book has been returned!\n";
             return;
@@ -134,10 +141,18 @@ void Librarian::displayBorrowedBooks(int memberID)
     }
 }
 void Librarian::calcFine(int memberID)
-{
-    // decrement memberID since vector starts at index 0
-    memberID --;
+{   
 
+    // obtaining today's date
+    Date currentDate = getCurrentDate("Today");
+    // obtaining last book in the vector
+    Book tempBook = libraryMembers[memberID].getBooksBorrowed().back();
+    // obtaining the due date of the book we need
+    Date dueDate = tempBook.getDueDate();
+    int differenceInDays = getDifferenceInDays(currentDate, dueDate);
+
+
+    
 }
 int Librarian::getStaffID()
 {
@@ -180,15 +195,7 @@ std::vector<Book>& Member::getBooksBorrowed()
 
 void Member::setBooksBorrowed(Book book)
 {   
-    // checks if vector is empty and if so store the book.
-    if (booksLoaned.size() == 0)
-    {
-        this->booksLoaned.push_back(book);
-        return;
-    }
-
     this->booksLoaned.push_back(book);
-
 }
 
 //Methods for Book Class
@@ -495,7 +502,7 @@ void readBookFile()
     file.open(filePath);
     std::string line, word, bookData[5];
 
-    //getting the first line which does not contain book information
+    //getting the first line which contains book information
     std::getline(file, line);
     //while loop continues until it reaches end of file
     while (std::getline(file, line)) 
@@ -681,6 +688,31 @@ int librarianMenu(Librarian newLibrarian)
 
     } while (choice != '0');
     return 0;
+}
+int getDifferenceInDays(Date currentDate, Date dueDate)
+{
+    // define time_point variables for specific dates   
+    struct tm currentDateTm  = {0};
+    struct tm dueDateTm  = {0};
+    
+    currentDateTm.tm_year = currentDate.year - 1900;
+    currentDateTm.tm_mon = currentDate.month - 1;
+    currentDateTm.tm_mday = currentDate.day;
+    
+    dueDateTm.tm_year = dueDate.year - 1900;
+    dueDateTm.tm_mon = dueDate.month - 1;
+    dueDateTm.tm_mday = dueDate.day;
+
+    // convert currentDate to time_t
+    time_t currentDateTime = mktime(&currentDateTm);
+    // convert dueDate to time_t
+    time_t dueDateTime = mktime(&dueDateTm);
+    // get difference in seconds between current time and due time
+    double difference = difftime(currentDateTime,dueDateTime);
+    // convert seconds to days
+    int days = difference / (60 * 60 * 24);
+    
+    return days;
 }
 Date getCurrentDate(std::string type)
  {
