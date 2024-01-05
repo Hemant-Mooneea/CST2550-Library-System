@@ -1,8 +1,14 @@
 #ifndef _LIBRARY_SYSTEM_H_
 #define _LIBRARY_SYSTEM_H_
     
+#include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <fstream>
+#include <filesystem>
+#include <sstream>
+#include <ctime>
 
 // class declarations to avoid referencing errors
 class Book;
