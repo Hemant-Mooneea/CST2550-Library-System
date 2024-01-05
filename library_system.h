@@ -18,10 +18,9 @@ std::string validateName();
 std::string validateEmail();
 std::string validateAddress();
 int getDifferenceInDays(Date currentDate, Date dueDate);
-int isLeapYear(int year);
 int checkBookID();
 int checkMemberID();
-Date getCurrentDate(std::string type);
+Date getDate(std::string type);
 
 struct Date 
 {
