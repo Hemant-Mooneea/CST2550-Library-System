@@ -17,7 +17,7 @@ std::vector<Member> libraryMembers;
 int memberIDCounter = 0;
 
 
-//Methods for Class Person
+// Methods for Class Person
 std::string Person::getName()
 {
     return this->name;
@@ -43,7 +43,7 @@ void Person::setAddress(std::string address)
     this->address = address;
 }
 
-//Methods for Librarian Class
+// Methods for Librarian Class
 Librarian::Librarian(int staffID, std::string name, std::string address,
 std::string email, int salary)
 {
@@ -59,57 +59,79 @@ void Librarian::addMember()
     memberIDCounter ++;
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
-    
+    // Delcaring member info
     std::string name, address, email;
     std::cout << "Enter Member Details: \n";
+    // Performing data valdiation on each member info
     name = validateName();
     address = validateAddress();
     email = validateEmail();
+    // Creating a new member object for the new member using their info
     Member newMember(memberIDCounter, name, address, email);
+    // Storing the new member oject in a vector
     libraryMembers.push_back(newMember);
 }
 void Librarian::issueBook(int memberID, int bookID)
 {   
-    // decrement memberID and bookID since vector starts at index 0
+    // Decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
+    // Obtaining the due date of a specific book inside the vector using the bookID
     Date dueDate = libraryBooks[bookID].getDueDate();
+    // dueDate.day == 0 means that the book does NOT have a due date which means that it is available to be borrowed
     if (dueDate.day != 0)
     {
         std::cout << "This book is not available!\n";
         return;
     }
+    /*
+    Setting a dueDate 3 days in the future to a book in the vector by calling
+    the getCurrentDate function with parameter "Three Days"
+    */
     libraryBooks[bookID].setDueDate(getCurrentDate("Three Days"));
+    // Adding the book object to the booksLoaned vector of a specific member
     libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
+    // Confirmation message that a book has been issued
     std::cout << "Book has been issued!\n";
 }
 void Librarian::returnBook(int memberID, int bookID)
 {
-    // decrement memberID and bookID since vector starts at index 0
+    // Decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
+    // Creating a temporary Book object
     Book tempBook;
+    // Creating a vector which points towards the address of a member's bookLoaned vector
     std::vector<Book>& borrowedBooks 
     = libraryMembers[memberID].getBooksBorrowed();
-    
+    // Checking if the member has any book borrowed by verifying size of the vector
     if (borrowedBooks.size() == 0)
     {
         std::cout << "Member has no books borrowed!\n";
         return;
     }
 
+    // Iterating throughtout the member's bookLoaned vector
     for (int i = 0; i < borrowedBooks.size(); i++)
-    {
+    {   // Checking if the member borrowed a book with the same ID which they want to return
         if (libraryBooks[bookID].getbookID() == borrowedBooks[i].getbookID())
         {   
-            tempBook = libraryBooks[bookID];    
+            // Copying the book object which we want to return
+            tempBook = libraryBooks[bookID];
+            /*
+             Pushing the book object at the last position in the vector which
+             allows for easy retrieval of the book's data since we can access the 
+             last index of the vector
+            */     
             borrowedBooks.push_back(tempBook);
+            // Calculating fines, if any
             this->calcFine(memberID);
+            // Removing the extra tempBook object since it is uneeded
             borrowedBooks.pop_back();
 
             libraryBooks[bookID].returnBook();
+            // Removing the book which the member wants to return from their bookLoaned vector
             borrowedBooks.erase(borrowedBooks.begin() + i);
-            std::cout << "Book has been returned!\n";
             return;
         }
     }
@@ -117,7 +139,7 @@ void Librarian::returnBook(int memberID, int bookID)
 }
 void Librarian::displayBorrowedBooks(int memberID)
 {
-    // decrement memberID since vector starts at index 0
+    // Decrement memberID since vector starts at index 0
     memberID --;
     std::vector <Book> currentMemberBooks;
     Date dueDate;
@@ -126,13 +148,13 @@ void Librarian::displayBorrowedBooks(int memberID)
     std::endl;
     
     currentMemberBooks = libraryMembers[memberID].getBooksBorrowed();
-    
+    // Checking if member borrowed any book based on the vector size
     if(currentMemberBooks.size() == 0)
     {
         std::cout << "Member has no books borrowed!\n";
         return;
     }
-
+    // Iterating the vector and outputing every book they borrowed and their due dates
     for (int i = 0; i < currentMemberBooks.size(); i++)
     {   
         dueDate = currentMemberBooks[i].getDueDate();
@@ -142,26 +164,23 @@ void Librarian::displayBorrowedBooks(int memberID)
 }
 void Librarian::calcFine(int memberID)
 {   
-
-    // obtaining today's date
+    // Obtaining today's date
     Date currentDate = getCurrentDate("Today");
-    // obtaining last book in the vector
+    // Obtaining last book in the vector
     Book tempBook = libraryMembers[memberID].getBooksBorrowed().back();
-    // obtaining the due date of the book we need
+    // Obtaining the due date of the book we need
     Date dueDate = tempBook.getDueDate();
-    // variable to store the difference in days between 2 dates
+    // Variable to store the difference in days between 2 dates
     int differenceInDays = getDifferenceInDays(currentDate, dueDate);
-    
+    // If the difference in days is less or equal 0 then due date has NOT been exceeded
     if (differenceInDays <= 0 )
     {
-        std::cout << "Book returned on time, no fines!";
+        std::cout << "Book returned on time, no fines!\n";
     }  
     else
     {   
-        std::cout << "Fines are due: £" + differenceInDays;
+        std::cout << "Fines are due: £" + differenceInDays << std::endl;
     }
-    confirmInput();
-
 }
 int Librarian::getStaffID()
 {
@@ -192,9 +211,8 @@ std::string email)
 }
 std::string Member::getMemberID()
 {   
-    //converting memberId to string since method returns string
-    std::string memberIdString = std::to_string(this->memberId);
-    return memberIdString;
+    // Converting memberId to string since method returns string
+    return std::to_string(this->memberId);
 }
 
 std::vector<Book>& Member::getBooksBorrowed()
@@ -207,7 +225,7 @@ void Member::setBooksBorrowed(Book book)
     this->booksLoaned.push_back(book);
 }
 
-//Methods for Book Class
+// Methods for Book Class
 Book::Book(int bookID, std::string bookName, std::string authorFirstName, 
 std::string authorLastName)
 {
@@ -219,9 +237,8 @@ std::string authorLastName)
 }
 std::string Book::getbookID()
 {
-    //converting bookID to string since method returns string
-    std::string bookIDString = std::to_string(this->bookID);
-    return bookIDString;
+    // Converting bookID to string since method returns string
+    return std::to_string(this->bookID);
 }
 
 std::string Book::getbookName()
@@ -246,16 +263,18 @@ void Book::setDueDate(Date dueDate)
 }
 void Book::returnBook()
 {
+    // Creating a temporary Date object
     Date emptyDate;
-    
+    // Setting the book's borrower to empty string
     this->borrower.setName("");
     this->borrower.setAddress("");
     this->borrower.setEmail("");
-    
+    // Setting the book's return date to 0
     emptyDate.year = 0;
     emptyDate.day = 0;
     emptyDate.month = 0;
     emptyDate.dateFormatted = "";
+    // Setting the book's due date variables to 0, meaning that it is available
     setDueDate(emptyDate);
 
 }
@@ -264,7 +283,7 @@ void Book::borrowBook(Member borrower, Date dueDate)
     this->borrower = borrower;
     setDueDate(dueDate);
 }
-
+// hasDigits checks if there are any digits within a string
 bool hasDigits(std::string str)
 {
     bool check;
@@ -278,6 +297,7 @@ bool hasDigits(std::string str)
     }
     return true;
 }
+// hasNonDigits checks if there are anything but digits within a string
 bool hasNonDigits(std::string str) 
 {
     bool check;
@@ -291,14 +311,14 @@ bool hasNonDigits(std::string str)
     }
     return false;
 }
-
+// hasWhiteSpaces checks whether the user input nothing in a field
 bool hasWhiteSpaces(std::string str)
 {   
     //iterates throughtout the string to check if all characters are spaces
     bool check = std::all_of(str.begin(),str.end(),isspace);
     return check;
 }
-
+// hasAtSign checks if the string contains an @ sign
 bool hasAtSign(std::string str)
 {
     bool check;
@@ -311,6 +331,11 @@ bool hasAtSign(std::string str)
     }
     return false;
 }
+/*
+validateName returns a string variable which goes through the following checks:
+-checks for any number in the string
+-checks if nothing was input
+*/
 std::string validateName()
 {   
     std::string name;
@@ -346,6 +371,10 @@ std::string validateName()
     return name;
 
 }
+/*
+validateAddress returns a string variable which goes through the following checks:
+-checks if nothing was input
+*/
 std::string validateAddress()
 {   
     std::string address;
@@ -366,6 +395,11 @@ std::string validateAddress()
 
     return address;
 }
+/*
+validateEmail returns a string variable which goes through the following checks:
+-checks if nothing was input
+-checks if an @ sign is present in the string
+*/
 std::string validateEmail()
 {
     std::string email;
@@ -399,7 +433,15 @@ std::string validateEmail()
     } while (!exitLoop);
     return email;
 }
-
+/*
+validateNumbers has a parameter string which represents what number is being 
+validated e.g:type can be "MemberID", "Salary"
+It returns an Integer variable which goes through the following checks:
+-checks if nothing was input
+-checks if anything other than a number is the string
+It converts the string variable used to hold perform string manipulation into an
+integer at the end
+*/
 int validateNumbers(std::string type)
 {   
     int number;
@@ -432,9 +474,13 @@ int validateNumbers(std::string type)
         }
 
     } while (!exitLoop);
+    // converting string to integer
     number = std::stoi(tempNumber);
     return number;
 }
+/*
+    checkFilePath has the user input a path an checks if a file is found there.
+*/
 std::string checkFilePath()
 {
     std::string filePath;
@@ -447,7 +493,25 @@ std::string checkFilePath()
         if (!checkFile) 
         {
             std::cout << "File does not exist at path: " + filePath + "\n";
-        } 
+        }
+        else
+        {
+            int len = filePath.length();
+            if (len >= 3) 
+            {
+                std::string lastThree = filePath.substr(len - 3);
+                if (lastThree != "csv")
+                {
+                    std::cout << "System only accept .csv files \n";
+                    checkFile = false;
+                }
+            } 
+            else 
+            {   
+                std::cout << "System only accept .csv files \n";
+                checkFile = false;
+            }
+        }
     } while (!checkFile);
     return filePath;
 }
@@ -623,7 +687,6 @@ void confirmInput()
 }
 void displayLatestMember()
 {
-    
     int lastIndex = libraryMembers.size() - 1;
     std::cout << "===New Member Details===\n";
     std::cout << "Name: " + libraryMembers[lastIndex].getName() + "\n";
