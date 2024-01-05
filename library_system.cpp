@@ -76,9 +76,8 @@ void Librarian::issueBook(int memberID, int bookID)
     // Decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
-    // Obtaining the due date of a specific book inside the vector using the bookID
     Date dueDate = libraryBooks[bookID].getDueDate();
-    // dueDate.day == 0 means that the book does NOT have a due date which means that it is available to be borrowed
+    // dueDate.day == 0 means that it is available to be borrowed
     if (dueDate.day != 0)
     {
         std::cout << "This book is not available!\n";
@@ -86,9 +85,9 @@ void Librarian::issueBook(int memberID, int bookID)
     }
     /*
     Setting a dueDate 3 days in the future to a book in the vector by calling
-    the getCurrentDate function with parameter "Three Days"
+    the getDate function with parameter "Three Days"
     */
-    libraryBooks[bookID].setDueDate(getCurrentDate("Three Days"));
+    libraryBooks[bookID].setDueDate(getDate("Three Days"));
     // Adding the book object to the booksLoaned vector of a specific member
     libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
     // Confirmation message that a book has been issued
@@ -99,12 +98,11 @@ void Librarian::returnBook(int memberID, int bookID)
     // Decrement memberID and bookID since vector starts at index 0
     memberID --;
     bookID --;
-    // Creating a temporary Book object
     Book tempBook;
-    // Creating a vector which points towards the address of a member's bookLoaned vector
+    // Vector which points towards the address of a member's bookLoaned vector
     std::vector<Book>& borrowedBooks 
     = libraryMembers[memberID].getBooksBorrowed();
-    // Checking if the member has any book borrowed by verifying size of the vector
+    // Checking if the member has any book borrowed using the size of the vector
     if (borrowedBooks.size() == 0)
     {
         std::cout << "Member has no books borrowed!\n";
@@ -113,15 +111,15 @@ void Librarian::returnBook(int memberID, int bookID)
 
     // Iterating throughtout the member's bookLoaned vector
     for (int i = 0; i < borrowedBooks.size(); i++)
-    {   // Checking if the member borrowed a book with the same ID which they want to return
+    {   // Checking if the member borrowed a book with that bookID
         if (libraryBooks[bookID].getbookID() == borrowedBooks[i].getbookID())
         {   
             // Copying the book object which we want to return
             tempBook = libraryBooks[bookID];
             /*
-             Pushing the book object at the last position in the vector which
-             allows for easy retrieval of the book's data since we can access the 
-             last index of the vector
+                Pushing the book object at the last position in the vector which
+                allows for easy retrieval of the book's data since we can access 
+                the last index of the vector
             */     
             borrowedBooks.push_back(tempBook);
             // Calculating fines, if any
@@ -130,7 +128,7 @@ void Librarian::returnBook(int memberID, int bookID)
             borrowedBooks.pop_back();
 
             libraryBooks[bookID].returnBook();
-            // Removing the book which the member wants to return from their bookLoaned vector
+            // Removing the returned book from member's bookLoaned vector
             borrowedBooks.erase(borrowedBooks.begin() + i);
             return;
         }
@@ -154,7 +152,7 @@ void Librarian::displayBorrowedBooks(int memberID)
         std::cout << "Member has no books borrowed!\n";
         return;
     }
-    // Iterating the vector and outputing every book they borrowed and their due dates
+    // Iterating the vector and outputing all book borrowed and their due dates
     for (int i = 0; i < currentMemberBooks.size(); i++)
     {   
         dueDate = currentMemberBooks[i].getDueDate();
@@ -165,14 +163,14 @@ void Librarian::displayBorrowedBooks(int memberID)
 void Librarian::calcFine(int memberID)
 {   
     // Obtaining today's date
-    Date currentDate = getCurrentDate("Today");
+    Date currentDate = getDate("Today");
     // Obtaining last book in the vector
     Book tempBook = libraryMembers[memberID].getBooksBorrowed().back();
     // Obtaining the due date of the book we need
     Date dueDate = tempBook.getDueDate();
     // Variable to store the difference in days between 2 dates
     int differenceInDays = getDifferenceInDays(currentDate, dueDate);
-    // If the difference in days is less or equal 0 then due date has NOT been exceeded
+    // If the difference in days is <= 0 then due date has NOT been exceeded
     if (differenceInDays <= 0 )
     {
         std::cout << "Book returned on time, no fines!\n";
@@ -332,9 +330,10 @@ bool hasAtSign(std::string str)
     return false;
 }
 /*
-validateName returns a string variable which goes through the following checks:
--checks for any number in the string
--checks if nothing was input
+    validateName returns a string variable which goes through the following 
+    checks:
+    -checks for any number in the string
+    -checks if nothing was input
 */
 std::string validateName()
 {   
@@ -372,8 +371,9 @@ std::string validateName()
 
 }
 /*
-validateAddress returns a string variable which goes through the following checks:
--checks if nothing was input
+    validateAddress returns a string variable which goes through the following
+     checks:
+    -checks if nothing was input
 */
 std::string validateAddress()
 {   
@@ -396,9 +396,10 @@ std::string validateAddress()
     return address;
 }
 /*
-validateEmail returns a string variable which goes through the following checks:
--checks if nothing was input
--checks if an @ sign is present in the string
+    validateEmail returns a string variable which goes through the following 
+    checks:
+    -checks if nothing was input
+    -checks if an @ sign is present in the string
 */
 std::string validateEmail()
 {
@@ -434,13 +435,13 @@ std::string validateEmail()
     return email;
 }
 /*
-validateNumbers has a parameter string which represents what number is being 
-validated e.g:type can be "MemberID", "Salary"
-It returns an Integer variable which goes through the following checks:
--checks if nothing was input
--checks if anything other than a number is the string
-It converts the string variable used to hold perform string manipulation into an
-integer at the end
+    validateNumbers has a parameter string which represents what number is being 
+    validated e.g: type can be "MemberID", "Salary"
+    It returns an Integer variable which goes through the following checks:
+    -checks if nothing was input
+    -checks if anything other than a number is the string
+    It converts the string variable used to hold perform string manipulation 
+    into an integer at the end
 */
 int validateNumbers(std::string type)
 {   
@@ -480,6 +481,8 @@ int validateNumbers(std::string type)
 }
 /*
     checkFilePath has the user input a path an checks if a file is found there.
+    It then checks if the file has a csv extension and warns the user if the
+    wrong file is input
 */
 std::string checkFilePath()
 {
@@ -515,6 +518,18 @@ std::string checkFilePath()
     } while (!checkFile);
     return filePath;
 }
+/*
+    extractBookData has two parameters an array of type string and a string line
+    
+    The function is used to breakdown a line of text into different strings 
+    
+    The string is cut short when a comma is found in line which is then stored
+    in the array based on an index which is incremented everytime somethng is 
+    stored.
+
+    Some books have " " in their titles which indicates that their title have
+    a comma in them. As such if statements check for " " for each word.
+*/
 void extractBookData(std::string bookData[], std::string line)
 {   
     int count;
@@ -531,8 +546,8 @@ void extractBookData(std::string bookData[], std::string line)
     while (std::getline(s, word, ',')) 
     { 
         /* 
-        checking if the first part of the string is " which in the csv file 
-        indicates that a string contains a comma within it
+            checking if the first character of the string is " which in the csv 
+            file indicates that a string contains a comma within it
         */
         if (word[0] == '"' || isWordComplete == false) 
         {
@@ -540,8 +555,8 @@ void extractBookData(std::string bookData[], std::string line)
             isWordComplete = false;
         }
         /* 
-        checking if the last part of the string is "  meaning that the string is 
-        complete
+            checking if the last character of the string is "  meaning that the 
+            string is complete
         */
         if (word[word.length() - 1] == '"')
         {   
@@ -565,6 +580,13 @@ void extractBookData(std::string bookData[], std::string line)
         }
     } 
 }
+/*
+    readBookFile is the function responsible for intialising the libraryBooks
+    vector with book objects using the data from the csv file
+    It makes use of the checkFilePath function to verify the path of the file 
+    and the extractBookData function to break down the data of each book to be 
+    stored 
+*/
 void readBookFile()
 {
     // ANSI escape sequence for clearing the screen
@@ -592,6 +614,13 @@ void readBookFile()
     }
     file.close();
 }
+/*
+    createNewLibrarian allows for the librarian to enter their user information
+    and stores that information into a temporary Librarian object.
+    It makes use of the validateName, validateAddress, validateEmail and
+    validateNumbers function to ensure proper data validation.
+    It stores the librarian's information using setters.
+*/
 Librarian createNewLibrarian()
 {   
     Librarian newLibrarian;
@@ -612,6 +641,10 @@ Librarian createNewLibrarian()
 
     return newLibrarian;
 }
+/*
+    checkBookID checks if the bookID input by a user exists in the libraryBooks
+    vector.
+*/
 int checkBookID()
 {
     bool check;
@@ -646,6 +679,10 @@ int checkBookID()
     } while (!check);
     return stoi(inputBookID);
 }
+/*
+    checkMemberID checks if the memberID input by a user exists in the 
+    libraryMembers vector.
+*/
 int checkMemberID()
 {   
     bool check;
@@ -679,91 +716,18 @@ int checkMemberID()
     } while (!check);
     return stoi(inputMemberID);
 }
-void confirmInput()
-{   
-    std::string confirm;
-    std::cout << "Type OK to continue \n";
-    std::cin >> confirm;
-}
-void displayLatestMember()
-{
-    int lastIndex = libraryMembers.size() - 1;
-    std::cout << "===New Member Details===\n";
-    std::cout << "Name: " + libraryMembers[lastIndex].getName() + "\n";
-    std::cout << "MemberID: " + libraryMembers[lastIndex].getMemberID() + "\n";
-    std::cout << "Address: " + libraryMembers[lastIndex].getAddress() + "\n";
-    std::cout << "Email: " + libraryMembers[lastIndex].getEmail() + "\n";
-}
-void displayMenuOptions()
-{
-    // ANSI escape sequence for clearing the screen
-    std::cout << "\x1B[2J\x1B[H";
-    std::cout << "Enter a number to choose an option \n";
-    std::cout << "[1] Add a member \n";
-    std::cout << "[2] Issue a book to a member \n";
-    std::cout << "[3] Return a book \n";
-    std::cout << "[4] Display all books borrowed by a member \n";
-    std::cout << "[0] Exit \n";
-    std::cout << "Option: ";
-}
-
-int librarianMenu(Librarian newLibrarian)
-{   
-    char choice = '9';
-    int memberID, bookID;
-    Member newMember;
-    do
-    {   
-        displayMenuOptions();
-        std::cin >> choice;
-        switch (choice)
-        {
-            case '1':
-                newLibrarian.addMember();
-                displayLatestMember();
-                confirmInput();
-                break;
-            case '2':
-                memberID = checkMemberID();
-                if (memberID != 0)
-                {
-                    bookID = checkBookID();
-                    if (bookID != 0)
-                    {
-                        newLibrarian.issueBook(memberID, bookID);
-                        confirmInput();
-                    }
-                }
-
-                break;
-            case '3':
-                memberID = checkMemberID();
-                if (memberID != 0)
-                {
-                    bookID = checkBookID();
-                    if (bookID != 0)
-                    {
-                        newLibrarian.returnBook(memberID, bookID);
-                        confirmInput();
-                    }
-                }
-                break;
-            case '4':
-                memberID = checkMemberID();
-                if (memberID != 0)
-                {
-                    newLibrarian.displayBorrowedBooks(memberID);
-                    confirmInput();
-                }
-                break;
-        }
-
-    } while (choice != '0');
-    return 0;
-}
+/*
+    getDifferenceInDays has 2 Date parameters, currentDate which is Today's Date 
+    and dueDate which is the due date of a book object
+    The functions uses time_point structures to convert these dates into seconds
+    based on their year, month and day 
+    It then substracts those seconds and convert them into days which represents
+    the number of days between 2 dates
+*/
 int getDifferenceInDays(Date currentDate, Date dueDate)
-{
-    // define time_point variables for specific dates   
+{   
+    const int SECONDSTODAYS = 60 * 60 * 24;
+    // define time_point structures for specific dates   
     struct tm currentDateTm  = {0};
     struct tm dueDateTm  = {0};
     
@@ -782,13 +746,19 @@ int getDifferenceInDays(Date currentDate, Date dueDate)
     // get difference in seconds between current time and due time
     double difference = difftime(currentDateTime, dueDateTime);
     // convert seconds to days
-    int days = difference / (60 * 60 * 24);
+    int days = difference / SECONDSTODAYS;
     
     return days;
 }
-Date getCurrentDate(std::string type)
+/*
+    getDate has a string parameter, type, which is used to obtain the date
+    The type parameter can take two values "Today" or "Three Days" which based
+    on those values return appropriate dates.
+*/
+Date getDate(std::string type)
  {
-    int secondInThreeDays = 259200;
+    const int SECONDSINTHREEDAYS = 259200;
+    // obtain today's current time 
     std::time_t currentTime;
 
     if (type == "Today") 
@@ -796,8 +766,9 @@ Date getCurrentDate(std::string type)
         currentTime = std::time(nullptr);
     } 
     else if (type == "Three Days") 
-    {
-        currentTime = std::time(nullptr) + secondInThreeDays;
+    {   
+        // Adding 3 days worth of seconds into today's date
+        currentTime = std::time(nullptr) + SECONDSINTHREEDAYS;
     }
 
     std::tm* currentDate = std::localtime(&currentTime);
@@ -811,7 +782,109 @@ Date getCurrentDate(std::string type)
                                  std::to_string(current_date.year);
     return current_date;
 }
+// confirmInput is used to obtain user confirmation after a change
+void confirmInput()
+{   
+    std::string confirm;
+    std::cout << "Type OK to continue \n";
+    std::cin >> confirm;
+}
+// displayLatestMember outputs every detail about the newest member
+void displayLatestMember()
+{
+    int lastIndex = libraryMembers.size() - 1;
+    std::cout << "===New Member Details===\n";
+    std::cout << "Name: " + libraryMembers[lastIndex].getName() + "\n";
+    std::cout << "MemberID: " + libraryMembers[lastIndex].getMemberID() + "\n";
+    std::cout << "Address: " + libraryMembers[lastIndex].getAddress() + "\n";
+    std::cout << "Email: " + libraryMembers[lastIndex].getEmail() + "\n";
+}
+/*
+    displayMenuOptions output all the Librarian's options namely:
+    -Adding New members
+    -Issuing a book to a member
+    -Returning a book
+    -Displaying all books borrowed by a member
+    
+*/
+void displayMenuOptions()
+{
+    // ANSI escape sequence for clearing the screen
+    std::cout << "\x1B[2J\x1B[H";
+    std::cout << "Enter a number to choose an option \n";
+    std::cout << "[1] Add a member \n";
+    std::cout << "[2] Issue a book to a member \n";
+    std::cout << "[3] Return a book \n";
+    std::cout << "[4] Display all books borrowed by a member \n";
+    std::cout << "[0] Exit \n";
+    std::cout << "Option: ";
+}
+/*
+    librarianMenu is where the librarian is able to input a number corresponding
+    to what action they would like to perform
+    displayMenuOptions() is called to show the librarian what choices they have
+    validation of memberID and bookID is carried out by checkMemberID and 
+    checkBookID to ensure no errors arise.
+    Based on their choice another function is called to perform that task
+*/
+void librarianMenu(Librarian newLibrarian)
+{   
+    int option;
+    int memberID, bookID;
+    Member newMember;
+    do
+    {   
+        displayMenuOptions();
+        option = validateNumbers("Option");
 
+        switch (option)
+        {
+            case 1:
+                newLibrarian.addMember();
+                displayLatestMember();
+                confirmInput();
+                break;
+            case 2:
+                memberID = checkMemberID();
+                if (memberID != 0)
+                {
+                    bookID = checkBookID();
+                    if (bookID != 0)
+                    {
+                        newLibrarian.issueBook(memberID, bookID);
+                        confirmInput();
+                    }
+                }
+
+                break;
+            case 3:
+                memberID = checkMemberID();
+                if (memberID != 0)
+                {
+                    bookID = checkBookID();
+                    if (bookID != 0)
+                    {
+                        newLibrarian.returnBook(memberID, bookID);
+                        confirmInput();
+                    }
+                }
+                break;
+            case 4:
+                memberID = checkMemberID();
+                if (memberID != 0)
+                {
+                    newLibrarian.displayBorrowedBooks(memberID);
+                    confirmInput();
+                }
+                break;
+        }
+
+    } while (option != 0);
+}
+/*
+    main program is used to initialise the Librarian object, libraryBooks vector
+    and call the librarianMenu function
+*/
 int main()
 {
 
