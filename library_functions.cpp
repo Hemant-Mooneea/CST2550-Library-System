@@ -6,7 +6,11 @@
 */
 
 #include "library_system.cpp"
-// hasDigits checks if there are any digits within a string
+/*
+    hasDigits checks if there are any digits found within a string
+    @param: the string to be tested
+    @return: a boolean to represent if the string has any digits in it
+*/
 bool hasDigits(std::string str)
 {
     bool check;
@@ -20,7 +24,11 @@ bool hasDigits(std::string str)
     }
     return true;
 }
-// hasNonDigits checks if there are anything but digits within a string
+/* 
+    hasNonDigits checks if there are anything but digits within a string
+    @param: the string to be tested
+    @return: a boolean to represent if the string has non-digits characters
+*/
 bool hasNonDigits(std::string str) 
 {
     bool check;
@@ -34,14 +42,22 @@ bool hasNonDigits(std::string str)
     }
     return false;
 }
-// hasWhiteSpaces checks whether the user input nothing in a field
+/*
+     hasWhiteSpaces checks whether the user input nothing in a field
+     @param: the string to be tested
+     @return: a boolean representing whether the string has whitespaces or not
+*/
 bool hasWhiteSpaces(std::string str)
 {   
     //iterates throughtout the string to check if all characters are spaces
     bool check = std::all_of(str.begin(),str.end(),isspace);
     return check;
 }
-// hasAtSign checks if the string contains an @ sign
+/*
+     hasAtSign checks if the string contains an @ sign
+     @param: the string to be tested
+     @return: a boolean which represents whether the string has an @ sign or not
+*/
 bool hasAtSign(std::string str)
 {
     bool check;
@@ -55,10 +71,12 @@ bool hasAtSign(std::string str)
     return false;
 }
 /*
-    validateName returns a string variable which goes through the following 
-    checks:
-    -checks for any number in the string
-    -checks if nothing was input
+    validateName allows the user to input a string and loops until the following
+    are met:
+    -no number in the string
+    -non empty string was input
+    @param: none
+    @return: the name of a person 
 */
 std::string validateName()
 {   
@@ -96,9 +114,11 @@ std::string validateName()
 
 }
 /*
-    validateAddress returns a string variable which goes through the following
-     checks:
-    -checks if nothing was input
+    validateAddress allows the user to input a string and loops until the 
+    following are met:
+    -a non empty string was input
+    @param: none
+    @return: a person's address
 */
 std::string validateAddress()
 {   
@@ -121,10 +141,12 @@ std::string validateAddress()
     return address;
 }
 /*
-    validateEmail returns a string variable which goes through the following 
-    checks:
-    -checks if nothing was input
-    -checks if an @ sign is present in the string
+    validateEmail allows the user to input a string and loops until the 
+    following are met:
+    -a non empty string is input
+    -string contains an @ sign
+    @param: none
+    @return: a person's email address
 */
 std::string validateEmail()
 {
@@ -160,13 +182,12 @@ std::string validateEmail()
     return email;
 }
 /*
-    validateNumbers has a parameter string which represents what number is being 
-    validated e.g: type can be "MemberID", "Salary"
-    It returns an Integer variable which goes through the following checks:
-    -checks if nothing was input
-    -checks if anything other than a number is the string
-    It converts the string variable used to hold perform string manipulation 
-    into an integer at the end
+    validateNumbers allows the user to input an integer and loops until the 
+    following are met:
+    -a non empty string was input
+    -an integer was input
+    @param: the integer we are trying to validate(e.g MemberID, StaffID)
+    @return: an integer which represents what was input in the parameter
 */
 int validateNumbers(std::string type)
 {   
@@ -208,6 +229,8 @@ int validateNumbers(std::string type)
     checkFilePath has the user input a path an checks if a file is found there.
     It then checks if the file has a csv extension and warns the user if the
     wrong file is input
+    @param: none
+    @return: the path where the csv file is located
 */
 std::string checkFilePath()
 {
@@ -244,16 +267,16 @@ std::string checkFilePath()
     return filePath;
 }
 /*
-    extractBookData has two parameters an array of type string and a string line
-    
-    The function is used to breakdown a line of text into different strings 
-    
+    extractBookData is used to breakdown a line of text into different strings 
     The string is cut short when a comma is found in line which is then stored
     in the array based on an index which is incremented everytime somethng is 
     stored.
-
-    Some books have " " in their titles which indicates that their title have
-    a comma in them. As such if statements check for " " for each word.
+    @params:
+            bookData: an array of string used to store the information of the
+                      book based on its index(e.g index 0 stores bookid)    
+            line: a string which is a line from the csv file which will be used
+                  to extract from
+    @return: none
 */
 void extractBookData(std::string bookData[], std::string line)
 {   
@@ -311,6 +334,8 @@ void extractBookData(std::string bookData[], std::string line)
     It makes use of the checkFilePath function to verify the path of the file 
     and the extractBookData function to break down the data of each book to be 
     stored 
+    @param: none
+    @return: none
 */
 void readBookFile()
 {
@@ -344,7 +369,8 @@ void readBookFile()
     and stores that information into a temporary Librarian object.
     It makes use of the validateName, validateAddress, validateEmail and
     validateNumbers function to ensure proper data validation.
-    It stores the librarian's information using setters.
+    @param: none
+    @return: a Librarian object which will initialise the main librarian object
 */
 Librarian createNewLibrarian()
 {   
@@ -369,6 +395,8 @@ Librarian createNewLibrarian()
 /*
     checkBookID checks if the bookID input by a user exists in the libraryBooks
     vector.
+    @param: none
+    @return: an integer which represent a valid BookID found in the library
 */
 int checkBookID()
 {
@@ -407,6 +435,8 @@ int checkBookID()
 /*
     checkMemberID checks if the memberID input by a user exists in the 
     libraryMembers vector.
+    @param: none
+    @return: an integer which represents a valid MemberID of the library
 */
 int checkMemberID()
 {   
@@ -442,12 +472,14 @@ int checkMemberID()
     return stoi(inputMemberID);
 }
 /*
-    getDifferenceInDays has 2 Date parameters, currentDate which is Today's Date 
-    and dueDate which is the due date of a book object
-    The functions uses time_point structures to convert these dates into seconds
-    based on their year, month and day 
+    getDifferenceInDays uses time_point structures to convert 2 dates into 
+    seconds based on their year, month and day 
     It then substracts those seconds and convert them into days which represents
     the number of days between 2 dates
+    @params:
+            currentDate: today's date
+            dueDate: the due date of a book
+    @return: the difference between currentDate and dueDate in integer form
 */
 int getDifferenceInDays(Date currentDate, Date dueDate)
 {   
@@ -476,9 +508,11 @@ int getDifferenceInDays(Date currentDate, Date dueDate)
     return days;
 }
 /*
-    getDate has a string parameter, type, which is used to obtain the date
-    The type parameter can take two values "Today" or "Three Days" which based
-    on those values return appropriate dates.
+    getDate is used to obtain a specific date using ctime
+    @param: type can only be two input "Today" or "Three days" which represents
+            which date the system needs to access.
+    @return: a date structure containing either today's date or the date in 3
+             days time 
 */
 Date getDate(std::string type)
  {
@@ -507,14 +541,22 @@ Date getDate(std::string type)
                                  std::to_string(current_date.year);
     return current_date;
 }
-// confirmInput is used to obtain user confirmation after a change
+/*
+    confirmInput is used to obtain user confirmation after a change
+    @param: none
+    @return: none
+*/  
 void confirmInput()
 {   
     std::string confirm;
     std::cout << "Type OK to continue \n";
     std::cin >> confirm;
 }
-// displayLatestMember outputs every detail about the newest member
+/*
+    displayLatestMember outputs every detail about the newest member
+    @param: none
+    @return: none
+*/
 void displayLatestMember()
 {
     int lastIndex = libraryMembers.size() - 1;
@@ -530,6 +572,8 @@ void displayLatestMember()
     -Issuing a book to a member
     -Returning a book
     -Displaying all books borrowed by a member
+    @param: none
+    @return: none
     
 */
 void displayMenuOptions()
@@ -551,6 +595,8 @@ void displayMenuOptions()
     validation of memberID and bookID is carried out by checkMemberID and 
     checkBookID to ensure no errors arise.
     Based on their choice another function is called to perform that task
+    @param: A librarian object which is used to access the Librarian Methods
+    @return: none
 */
 void librarianMenu(Librarian newLibrarian)
 {   
