@@ -1,3 +1,10 @@
+/*
+    library_functions.cpp
+    Author: M00935155
+    Created:08/01/24
+    Updated:08/01/24
+*/
+
 #include "library_system.cpp"
 // hasDigits checks if there are any digits within a string
 bool hasDigits(std::string str)

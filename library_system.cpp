@@ -1,3 +1,10 @@
+/*
+    library_system.cpp
+    Author: M00935155
+    Created:27/12/23
+    Updated:08/01/24
+*/
+
 #include "library_system.h"
 
 // Global Variable used for storage of books
