@@ -3,6 +3,7 @@
 #include <string>
 #include "date.h"
 
+// Forward declaration of Book class
 class Member;
 
 class Book
