@@ -19,4 +19,4 @@ library_functions.o: library_functions.cpp library_system.h
 
 .PHONY: clean
 clean:
-	$(RM) *.o maths_tests
+	$(RM) *.o library_system

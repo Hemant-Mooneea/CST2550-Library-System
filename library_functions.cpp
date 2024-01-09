@@ -4,8 +4,17 @@
     Created:08/01/24
     Updated:09/01/24
 */
+#include "library_system.h"
+#include <iostream>
+#include <regex>
+#include <fstream>
+#include <filesystem>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <ctime>
 
-#include "library_system.cpp"
 /*
     hasAlpha checks if there are any non alphabet found within a string
     @param: the string to be tested

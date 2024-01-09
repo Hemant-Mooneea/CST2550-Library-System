@@ -6,6 +6,10 @@
 */
 
 #include "library_system.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ctime>
 
 // Global Variable used for storage of books
 std::vector<Book> libraryBooks;
@@ -13,6 +17,16 @@ std::vector<Book> libraryBooks;
 std::vector<Member> libraryMembers;
 // Global Variable used for new memberID
 int memberIDCounter = 0;
+
+// function declaration to avoid referencing errors
+std::string validateName();
+std::string validateEmail();
+std::string validateAddress();
+int getDifferenceInDays(Date currentDate, Date dueDate);
+int checkBookID();
+int checkMemberID();
+Date getDate(std::string type);
+
 
 
 // Methods for Class Person
