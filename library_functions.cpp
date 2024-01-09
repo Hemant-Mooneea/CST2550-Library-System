@@ -7,22 +7,14 @@
 
 #include "library_system.cpp"
 /*
-    hasDigits checks if there are any digits found within a string
+    hasAlpha checks if there are any non alphabet found within a string
     @param: the string to be tested
-    @return: a boolean to represent if the string has any digits in it
+    @return: a boolean to represent if the string has any alphabet in it
 */
-bool hasDigits(std::string str)
+bool hasAlpha(std::string str) 
 {
-    bool check;
-    for (int i = 0; i < static_cast<int>(str.length()); i++)  
-    {
-        check = isdigit(str[i]);
-        if (check)
-        {
-            return false;
-        }
-    }
-    return true;
+    std::regex regexPattern("[^a-zA-Z]");
+    return !std::regex_search(str, regexPattern);
 }
 /* 
     hasNonDigits checks if there are anything but digits within a string
@@ -80,29 +72,29 @@ bool hasAtSign(std::string str)
 std::string validateName()
 {   
     std::string name;
-    bool doesNameDigits;
-    bool doesNameWhitespaces;
+    bool doesAlpha;
+    bool doesWhitespaces;
     bool exitLoop;
     do
     {
-        doesNameDigits = true;
-        doesNameWhitespaces = false;
+        doesAlpha = true;
+        doesWhitespaces = false;
         exitLoop = true;
 
         std::cout << "Enter Your Name: ";
         std::getline(std::cin,name);
         
         //checks for whitespaces such as "    "
-        doesNameWhitespaces = hasWhiteSpaces(name);
-        //checks if name has digits
-        doesNameDigits = hasDigits(name);
+        doesWhitespaces = hasWhiteSpaces(name);
+        //checks if name has any non-alphabet
+        doesAlpha = hasAlpha(name);
         
-        if (doesNameWhitespaces or name.length() == 0)
+        if (doesWhitespaces or name.length() == 0)
         {
             std::cout << "Name cannot be blank \n";
             exitLoop = false;
         }
-        else if (!doesNameDigits)
+        else if (!doesAlpha)
         {
             std::cout << "Name cannot contain numbers \n";
             exitLoop = false;
@@ -122,20 +114,20 @@ std::string validateName()
 std::string validateAddress()
 {   
     std::string address;
-    bool doesNameWhitespaces;
+    bool doesWhitespaces;
     do
     {
         std::cout << "Enter Your Address: ";
         std::getline(std::cin, address);
         
         //checks for whitespaces such as "    "
-        doesNameWhitespaces = hasWhiteSpaces(address);
+        doesWhitespaces = hasWhiteSpaces(address);
 
-        if (doesNameWhitespaces or address.length() == 0)
+        if (doesWhitespaces or address.length() == 0)
         {
             std::cout << "Name cannot be blank \n";
         }
-    } while (doesNameWhitespaces);
+    } while (doesWhitespaces);
 
     return address;
 }
@@ -151,23 +143,23 @@ std::string validateEmail()
 {
     std::string email;
     bool doesContainAtSign;
-    bool doesNameWhitespaces;
+    bool doesWhitespaces;
     bool exitLoop;
     do
     {
         doesContainAtSign = true;
-        doesNameWhitespaces = false;
+        doesWhitespaces = false;
         exitLoop = true;
 
         std::cout << "Enter Your Email: ";
         std::getline(std::cin,email);
         
         //checks for whitespaces such as "    "
-        doesNameWhitespaces = hasWhiteSpaces(email);
+        doesWhitespaces = hasWhiteSpaces(email);
         //checks if name has digits
         doesContainAtSign = hasAtSign(email);
         
-        if (doesNameWhitespaces or email.length() == 0)
+        if (doesWhitespaces or email.length() == 0)
         {
             std::cout << "Email cannot be blank \n";
             exitLoop = false;
@@ -192,28 +184,28 @@ int validateNumbers(std::string type)
 {   
     int number;
     std::string tempNumber;
-    bool doesNameWhitespaces;
-    bool doesNameDigits;
+    bool doesWhitespaces;
+    bool doesDigits;
     bool exitLoop;
     do
     {
-        doesNameDigits = false;
-        doesNameWhitespaces = false;
+        doesDigits = false;
+        doesWhitespaces = false;
         exitLoop = true;
 
         std::cout << "Enter Your " + type + " :";
         std::getline(std::cin, tempNumber);
 
         //checks for whitespaces such as "    "
-        doesNameWhitespaces = hasWhiteSpaces(tempNumber);
+        doesWhitespaces = hasWhiteSpaces(tempNumber);
         //checks for non digits 
-        doesNameDigits = hasNonDigits(tempNumber);
-        if (doesNameWhitespaces or tempNumber.length() == 0)
+        doesDigits = hasNonDigits(tempNumber);
+        if (doesWhitespaces or tempNumber.length() == 0)
         {
             std::cout << type +" cannot be blank \n";
             exitLoop = false;
         }
-        else if (doesNameDigits)
+        else if (doesDigits)
         {   
             std::cout << type + " can only contain numbers \n";
             exitLoop = false;
@@ -484,13 +476,12 @@ int getDifferenceInDays(Date currentDate, Date dueDate)
 {   
     const int SECONDSTODAYS = 60 * 60 * 24;
     // define time_point structures for specific dates   
-    struct tm currentDateTm  = {0};
-    struct tm dueDateTm  = {0};
-    
+    struct tm currentDateTm = {};
     currentDateTm.tm_year = currentDate.year - 1900;
     currentDateTm.tm_mon = currentDate.month - 1;
     currentDateTm.tm_mday = currentDate.day;
-    
+
+    struct tm dueDateTm = {};
     dueDateTm.tm_year = dueDate.year - 1900;
     dueDateTm.tm_mon = dueDate.month - 1;
     dueDateTm.tm_mday = dueDate.day;

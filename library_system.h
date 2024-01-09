@@ -8,6 +8,7 @@
 #define _LIBRARY_SYSTEM_H_
     
 #include <iostream>
+#include <regex>
 #include <string>
 #include <vector>
 #include <algorithm>
