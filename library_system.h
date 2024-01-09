@@ -1,7 +1,7 @@
 /*
     library_system.h
     Author: M00935155
-    Created:27/12/23
+    Created:16/12/23
     Updated:08/01/24
 */
 #ifndef _LIBRARY_SYSTEM_H_
@@ -70,7 +70,6 @@ class Member : public Person
         std::string getMemberID();
         std::vector <Book>& getBooksBorrowed();
         void setBooksBorrowed(Book book);  
-        
 };
 
 class Librarian : public Person

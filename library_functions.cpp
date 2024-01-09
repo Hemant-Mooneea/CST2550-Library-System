@@ -91,7 +91,7 @@ std::string validateName()
         exitLoop = true;
 
         std::cout << "Enter Your Name: ";
-        std::cin >> name;
+        std::getline(std::cin,name);
         
         //checks for whitespaces such as "    "
         doesNameWhitespaces = hasWhiteSpaces(name);
@@ -127,7 +127,7 @@ std::string validateAddress()
     do
     {
         std::cout << "Enter Your Address: ";
-        std::cin >> address;
+        std::getline(std::cin, address);
         
         //checks for whitespaces such as "    "
         doesNameWhitespaces = hasWhiteSpaces(address);
@@ -161,7 +161,7 @@ std::string validateEmail()
         exitLoop = true;
 
         std::cout << "Enter Your Email: ";
-        std::cin >> email;
+        std::getline(std::cin,email);
         
         //checks for whitespaces such as "    "
         doesNameWhitespaces = hasWhiteSpaces(email);
@@ -203,7 +203,7 @@ int validateNumbers(std::string type)
         exitLoop = true;
 
         std::cout << "Enter Your " + type + " :";
-        std::cin >> tempNumber;
+        std::getline(std::cin, tempNumber);
 
         //checks for whitespaces such as "    "
         doesNameWhitespaces = hasWhiteSpaces(tempNumber);
@@ -239,7 +239,7 @@ std::string checkFilePath()
     do
     {
         std::cout << "Input the path to the Books file:\n";
-        std::cin >> filePath;
+        std::getline(std::cin, filePath);
         checkFile = std::filesystem::exists(filePath);  
         if (!checkFile) 
         {
@@ -409,7 +409,7 @@ int checkBookID()
         check = false;
 
         std::cout << "Input BookID(Enter 0 to exit): ";
-        std::cin >> inputBookID;
+        std::getline(std::cin, inputBookID);
 
         if (inputBookID == "0")
         {
@@ -449,7 +449,7 @@ int checkMemberID()
         check = false;
 
         std::cout << "Input MemberID(Enter 0 to exit): ";
-        std::cin >> inputMemberID;
+        std::getline(std::cin, inputMemberID);
         if (inputMemberID == "0")
         {
             break;
@@ -550,7 +550,7 @@ void confirmInput()
 {   
     std::string confirm;
     std::cout << "Type OK to continue \n";
-    std::cin >> confirm;
+    std::getline(std::cin, confirm);
 }
 /*
     displayLatestMember outputs every detail about the newest member
