@@ -14,7 +14,7 @@
 bool hasDigits(std::string str)
 {
     bool check;
-    for (int i = 0; i < str.length(); i++)  
+    for (int i = 0; i < static_cast<int>(str.length()); i++)  
     {
         check = isdigit(str[i]);
         if (check)
@@ -32,7 +32,7 @@ bool hasDigits(std::string str)
 bool hasNonDigits(std::string str) 
 {
     bool check;
-    for (int i = 0; i < str.length(); i++) 
+    for (int i = 0; i < static_cast<int>(str.length()); i++) 
     {
         check = isdigit(str[i]);
         if (!check)
@@ -60,8 +60,7 @@ bool hasWhiteSpaces(std::string str)
 */
 bool hasAtSign(std::string str)
 {
-    bool check;
-    for (int i = 0; i < str.length(); i++) 
+    for (int i = 0; i < static_cast<int>(str.length()); i++) 
     {
         if (str[i] == '@')
         {
@@ -416,7 +415,7 @@ int checkBookID()
             break;
         }
 
-        for (int i = 0 ; i < libraryBooks.size(); i++)
+        for (int i = 0 ; i < static_cast<int>(libraryBooks.size()); i++)
         {   
             if (inputBookID == libraryBooks[i].getbookID())
             {   
@@ -455,7 +454,7 @@ int checkMemberID()
             break;
         }
 
-        for (int i = 0 ; i < libraryMembers.size(); i++)
+        for (int i = 0 ; i < static_cast<int>(libraryMembers.size()); i++)
         {   
             if (inputMemberID == libraryMembers[i].getMemberID())
             {
@@ -559,7 +558,7 @@ void confirmInput()
 */
 void displayLatestMember()
 {
-    int lastIndex = libraryMembers.size() - 1;
+    int lastIndex = static_cast<int>(libraryMembers.size()) - 1;
     std::cout << "===New Member Details===\n";
     std::cout << "Name: " + libraryMembers[lastIndex].getName() + "\n";
     std::cout << "MemberID: " + libraryMembers[lastIndex].getMemberID() + "\n";

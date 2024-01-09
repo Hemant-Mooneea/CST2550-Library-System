@@ -94,13 +94,13 @@ void Librarian::returnBook(int memberID, int bookID)
     std::vector<Book>& borrowedBooks 
     = libraryMembers[memberID].getBooksBorrowed();
     // Checking if the member has any book borrowed using the size of the vector
-    if (borrowedBooks.size() == 0)
+    if (static_cast<int>(borrowedBooks.size()) == 0)
     {
         std::cout << "Member has no books borrowed!\n";
         return;
     }
 
-    for (int i = 0; i < borrowedBooks.size(); i++)
+    for (int i = 0; i < static_cast<int>(borrowedBooks.size()); i++)
     {   // Checking if the member borrowed a book with that bookID
         if (libraryBooks[bookID].getbookID() == borrowedBooks[i].getbookID())
         {   
@@ -137,13 +137,13 @@ void Librarian::displayBorrowedBooks(int memberID)
     
     currentMemberBooks = libraryMembers[memberID].getBooksBorrowed();
     // Checking if member borrowed any book based on the vector size
-    if(currentMemberBooks.size() == 0)
+    if(static_cast<int>(currentMemberBooks.size()) == 0)
     {
         std::cout << "Member has no books borrowed!\n";
         return;
     }
     // Iterating the vector and outputing all book borrowed and their due dates
-    for (int i = 0; i < currentMemberBooks.size(); i++)
+    for (int i = 0; i < static_cast<int>(currentMemberBooks.size()); i++)
     {   
         dueDate = currentMemberBooks[i].getDueDate();
         std::cout << currentMemberBooks[i].getbookName() +"\n" +
