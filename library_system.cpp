@@ -147,7 +147,8 @@ void Librarian::displayBorrowedBooks(int memberID)
     {   
         dueDate = currentMemberBooks[i].getDueDate();
         std::cout << currentMemberBooks[i].getbookName() +"\n" +
-        "Date Of Return: " + dueDate.dateFormatted << std::endl;
+        "BookID: " + currentMemberBooks[i].getbookID() + "\n" +
+        "Date Of Return: " + dueDate.dateFormatted  << std::endl;
     }
 }
 void Librarian::calcFine(int memberID)
