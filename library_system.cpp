@@ -2,7 +2,7 @@
     library_system.cpp
     Author: M00935155
     Created:19/12/23
-    Updated:08/01/24
+    Updated:0/01/24
 */
 
 #include "library_system.h"
@@ -57,16 +57,14 @@ void Librarian::addMember()
     memberIDCounter ++;
     // ANSI escape sequence for clearing the screen
     std::cout << "\x1B[2J\x1B[H";
-    // Delcaring member info
     std::string name, address, email;
     std::cout << "Enter Member Details: \n";
-    // Performing data valdiation on each member info
+    // Performing data validation on each member info
     name = validateName();
     address = validateAddress();
     email = validateEmail();
     // Creating a new member object for the new member using their info
     Member newMember(memberIDCounter, name, address, email);
-    // Storing the new member oject in a vector
     libraryMembers.push_back(newMember);
 }
 void Librarian::issueBook(int memberID, int bookID)
@@ -81,14 +79,9 @@ void Librarian::issueBook(int memberID, int bookID)
         std::cout << "This book is not available!\n";
         return;
     }
-    /*
-    Setting a dueDate 3 days in the future to a book in the vector by calling
-    the getDate function with parameter "Three Days"
-    */
     libraryBooks[bookID].setDueDate(getDate("Three Days"));
     // Adding the book object to the booksLoaned vector of a specific member
     libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
-    // Confirmation message that a book has been issued
     std::cout << "Book has been issued!\n";
 }
 void Librarian::returnBook(int memberID, int bookID)
@@ -107,7 +100,6 @@ void Librarian::returnBook(int memberID, int bookID)
         return;
     }
 
-    // Iterating throughtout the member's bookLoaned vector
     for (int i = 0; i < borrowedBooks.size(); i++)
     {   // Checking if the member borrowed a book with that bookID
         if (libraryBooks[bookID].getbookID() == borrowedBooks[i].getbookID())
@@ -160,13 +152,10 @@ void Librarian::displayBorrowedBooks(int memberID)
 }
 void Librarian::calcFine(int memberID)
 {   
-    // Obtaining today's date
     Date currentDate = getDate("Today");
     // Obtaining last book in the vector
     Book tempBook = libraryMembers[memberID].getBooksBorrowed().back();
-    // Obtaining the due date of the book we need
     Date dueDate = tempBook.getDueDate();
-    // Variable to store the difference in days between 2 dates
     int differenceInDays = getDifferenceInDays(currentDate, dueDate);
     // If the difference in days is <= 0 then due date has NOT been exceeded
     if (differenceInDays <= 0 )
