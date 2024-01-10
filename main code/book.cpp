@@ -46,12 +46,6 @@ void Book::returnBook()
 {
     // Creating a temporary Date object
     Date emptyDate;
-    // Setting the book's borrower to empty string
-    /*
-    this->borrower->setName("");
-    this->borrower->setAddress("");
-    this->borrower->setEmail("");
-    */
     // Setting the book's return date to 0
     emptyDate.year = 0;
     emptyDate.day = 0;  

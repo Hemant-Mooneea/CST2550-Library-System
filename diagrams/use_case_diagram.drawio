@@ -1,11 +1,11 @@
 <mxfile host="65bd71144e">
     <diagram id="6DAbfeo4q94_teD_4dHF" name="Page-1">
-        <mxGraphModel dx="986" dy="474" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="896" dy="641" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="2" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="200" width="480" height="480" as="geometry"/>
+                    <mxGeometry x="205" y="-15" width="480" height="480" as="geometry"/>
                 </mxCell>
                 <mxCell id="4" value="Library System" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="387.5" y="10" width="105" height="30" as="geometry"/>
@@ -20,10 +20,10 @@
                     <mxGeometry x="380" y="140" width="120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="31" value="Return Book" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="387.5" y="290" width="120" height="50" as="geometry"/>
+                    <mxGeometry x="380" y="239" width="120" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="Display Fines" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="530" y="357" width="120" height="50" as="geometry"/>
+                <mxCell id="34" value="Ask Member To Pay Fine" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="526" y="302" width="120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="36" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="9" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -53,10 +53,10 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="45" value="Book Not Available" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="267.5" y="210" width="120" height="50" as="geometry"/>
+                    <mxGeometry x="517" y="209" width="120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="49" value="Member Did Not Borrow Books" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="372.5" y="369" width="120" height="50" as="geometry"/>
+                    <mxGeometry x="397" y="349" width="120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="52" value="Update Member List" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="550" y="20" width="120" height="50" as="geometry"/>
@@ -68,40 +68,25 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="54" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="45" target="29" edge="1">
-                    <mxGeometry x="-0.0427" y="-9" width="160" relative="1" as="geometry">
+                <mxCell id="54" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="45" target="29" edge="1">
+                    <mxGeometry x="0.0321" y="5" width="160" relative="1" as="geometry">
                         <mxPoint x="160" y="310" as="sourcePoint"/>
-                        <mxPoint x="320" y="310" as="targetPoint"/>
+                        <mxPoint x="443" y="186" as="targetPoint"/>
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="55" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=0.957;entryY=0.814;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="34" target="31" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
+                <mxCell id="55" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="34" target="31" edge="1">
+                    <mxGeometry x="0.0364" y="-2" width="160" relative="1" as="geometry">
                         <mxPoint x="339.9999999999999" y="327.32000000000005" as="sourcePoint"/>
                         <mxPoint x="405.07359312880703" y="299.99766952966365" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="56" value="Update Book List" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="470" y="210" width="120" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="57" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=1;exitDx=0;exitDy=0;" parent="1" source="29" target="56" edge="1">
-                    <mxGeometry x="0.2494" y="10" width="160" relative="1" as="geometry">
-                        <mxPoint x="469.99640687119273" y="210.0023304703363" as="sourcePoint"/>
-                        <mxPoint x="537.5700000000016" y="187.68" as="targetPoint"/>
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="59" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="31" target="56" edge="1">
-                    <mxGeometry x="-0.5669" y="13" width="160" relative="1" as="geometry">
-                        <mxPoint x="492.42640687119274" y="192.67766952966366" as="sourcePoint"/>
-                        <mxPoint x="540" y="220.00000000000006" as="targetPoint"/>
-                        <mxPoint as="offset"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="60" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="49" target="43" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
+                <mxCell id="60" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" parent="1" source="49" target="43" edge="1">
+                    <mxGeometry x="-0.2136" width="160" relative="1" as="geometry">
                         <mxPoint x="337.4999999999999" y="370" as="sourcePoint"/>
                         <mxPoint x="403.98" y="337.85" as="targetPoint"/>
+                        <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
             </root>
