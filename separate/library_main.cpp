@@ -147,6 +147,7 @@ void readBookFile()
         */
         Book newBook(stoi(bookData[0]),bookData[1],bookData[3],bookData[4]);
         libraryBooks.push_back(newBook);
+        
     }
     file.close();
 }
@@ -324,47 +325,46 @@ void librarianMenu(Librarian newLibrarian)
         displayMenuOptions();
         option = validateNumbers("Option");
 
-        switch (option)
+        if (option == 1) 
         {
-            case 1:
-                newLibrarian.addMember();
-                displayLatestMember();
-                confirmInput();
-                break;
-            case 2:
-                memberID = checkMemberID();
-                if (memberID != 0)
+            newLibrarian.addMember();
+            displayLatestMember();
+            confirmInput();
+        }   
+        else if (option == 2) 
+        {
+            memberID = checkMemberID();
+            if (memberID != 0) 
+            {
+                bookID = checkBookID();
+                if (bookID != 0) 
                 {
-                    bookID = checkBookID();
-                    if (bookID != 0)
-                    {
-                        newLibrarian.issueBook(memberID, bookID);
-                        confirmInput();
-                    }
-                }
-
-                break;
-            case 3:
-                memberID = checkMemberID();
-                if (memberID != 0)
-                {
-                    bookID = checkBookID();
-                    if (bookID != 0)
-                    {
-                        newLibrarian.returnBook(memberID, bookID);
-                        confirmInput();
-                    }
-                }
-                break;
-            case 4:
-                memberID = checkMemberID();
-                if (memberID != 0)
-                {
-                    newLibrarian.displayBorrowedBooks(memberID);
+                    newLibrarian.issueBook(memberID, bookID);
                     confirmInput();
                 }
-                break;
-        }
+            }
+        }   
+        else if (option == 3) 
+        {
+            memberID = checkMemberID();
+            if (memberID != 0) 
+            {
+                bookID = checkBookID();
+                if (bookID != 0) {
+                    newLibrarian.returnBook(memberID, bookID);
+                    confirmInput();
+                }
+            }
+        }   
+        else if (option == 4) 
+        {
+            memberID = checkMemberID();
+            if (memberID != 0) 
+            {
+                newLibrarian.displayBorrowedBooks(memberID);
+                confirmInput();
+            }
+        }       
 
     } while (option != 0);
 }
