@@ -1,3 +1,9 @@
+/*
+    member.cpp
+    Author: M00935155
+    Created: 09/01/24
+    Updated: 10/01/24
+*/
 #include "member.h"
 #include "book.h"
 Member::Member(int memberId, std::string name, std::string address, 

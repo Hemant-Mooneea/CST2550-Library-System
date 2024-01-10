@@ -1,3 +1,9 @@
+/*
+    utilities.h
+    Author: M00935155
+    Created: 09/01/24
+    Updated: 10/01/24
+*/
 #ifndef UTILITIES_H
 #define UTILITIES_H
 

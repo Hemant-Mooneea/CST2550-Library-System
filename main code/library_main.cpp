@@ -1,8 +1,8 @@
 /*
-    library_functions.cpp
+    library_main.cpp
     Author: M00935155
-    Created:08/01/24
-    Updated:09/01/24
+    Created: 09/01/24
+    Updated: 10/01/24
 */
 #include "librarian.h"
 #include "utilities.h"

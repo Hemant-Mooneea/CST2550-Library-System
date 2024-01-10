@@ -1,3 +1,9 @@
+/*
+    member.h
+    Author: M00935155
+    Created: 09/01/24
+    Updated: 10/01/24
+*/
 #ifndef _MEMBER_H_
 #define _MEMBER_H_
 #include <string>
