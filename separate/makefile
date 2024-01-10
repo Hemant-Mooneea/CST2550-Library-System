@@ -7,7 +7,7 @@ all: library_system
 library_system: library_main.o book.o librarian.o member.o person.o utilities.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-library_main.o: library_Main.cpp librarian.h utilities.h
+library_main.o: library_main.cpp librarian.h utilities.h book.h member.h
 	$(CXX) $(CXXFLAGS) -c $<
 
 book.o: book.cpp book.h date.h member.h
