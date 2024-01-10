@@ -29,4 +29,4 @@ int validateNumbers(std::string type);
 int getDifferenceInDays(Date currentDate, Date dueDate);
 Date getDate(std::string type);
 
-#endif // UTILITIES_H
+#endif

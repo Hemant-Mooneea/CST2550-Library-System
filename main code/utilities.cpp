@@ -103,7 +103,7 @@ std::string validateName()
         }
         else if (!doesAlpha)
         {
-            std::cout << "Name cannot contain numbers \n";
+            std::cout << "Name can only contain alphabets \n";
             exitLoop = false;
         }
     } while (!exitLoop);
