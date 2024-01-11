@@ -2,7 +2,7 @@
     librarian.cpp
     Author: M00935155
     Created: 09/01/24
-    Updated: 10/01/24
+    Updated: 11/01/24
 */
 #include "librarian.h"
 #include "book.h"
@@ -12,7 +12,16 @@
 
 #include <iostream>
 #include <vector>
-
+/*
+    Constructor for Librarian object
+    @params:
+            staffID: ID of the librarian
+            Name: Name of the librarian
+            address: Address of the librarian
+            email: Email of the librarian
+            salary: Salary of the librarian
+    @return: none
+*/
 Librarian::Librarian(int staffID, std::string name, std::string address,
 std::string email, int salary)
 {
@@ -22,6 +31,13 @@ std::string email, int salary)
     setAddress(address);
     setEmail(email);
 }
+/*
+    addMember allows the librarian to add new members to the library by taking
+    their information and validating them. The method also assigns them a 
+    memberID which is incremented by one for each new member.
+    @param: none
+    @return: none
+*/
 void Librarian::addMember()
 {   
     // Increasing the counter to prevent duplicate memberID
@@ -38,6 +54,16 @@ void Librarian::addMember()
     Member newMember(memberIDCounter, name, address, email);
     libraryMembers.push_back(newMember);
 }
+/*
+    issueBook allows the librarian to issue a book to a member. It checks the
+    availabiltiy of a book by seeing if it has a due date and displays an 
+    error message if unavailable. The method then sets the due date of the book
+    which is 3 days from the current date using the getDate() function.
+    @param:
+            memberID: the memberID of the member who wants to borrow a book
+            bookID: the bookID of the book which the member wants to borrow
+    @return: none     
+*/
 void Librarian::issueBook(int memberID, int bookID)
 {   
     // Decrement memberID and bookID since vector starts at index 0
@@ -55,6 +81,21 @@ void Librarian::issueBook(int memberID, int bookID)
     libraryMembers[memberID].setBooksBorrowed(libraryBooks[bookID]);
     std::cout << "Book has been issued!\n";
 }
+/*
+    returnBook allows a member to return a book. It checks if the member 
+    borrowed any books and displays an error message if not.
+    
+    The method then checks if the member borrowed a book with the bookID which
+    is passed as parameter and displays and error message if not.
+    
+    Additionally, the method removes the book from the member's borrowedBooks
+    vector
+
+    @param:
+            memberID: the memberID of the member who wants to return a book
+            bookID: the bookID of the book which the member wants to return
+    @return: none   
+*/
 void Librarian::returnBook(int memberID, int bookID)
 {
     // Decrement memberID and bookID since vector starts at index 0
@@ -96,6 +137,18 @@ void Librarian::returnBook(int memberID, int bookID)
     }
     std::cout << "Member did not borrow that book!\n";
 }
+/*
+    displayBorrowedBooks allows the librarian to view all the borrowed books of
+    a member.
+    It checks if the member borrowed any books and displays an error message if 
+    not.
+    The method displays the book name, bookID and due date of all of the books
+    borrowed by the member 
+
+    @param: the memberID of the member whom we want to display all of their
+            borrowed books
+    @return: none   
+*/
 void Librarian::displayBorrowedBooks(int memberID)
 {
     // Decrement memberID since vector starts at index 0
@@ -122,6 +175,14 @@ void Librarian::displayBorrowedBooks(int memberID)
         "Date Of Return: " + dueDate.dateFormatted  << std::endl;
     }
 }
+/*
+    calcFine is used to calculate fines when a member returns a book.
+    The method makes use of the te getDifferenceInDays function to obtain the 
+    number of days between today and the dueDate of the book which the member
+    wants to return and displays the fines if any
+    @param: the memberID of the member whom we want to calculate fines
+    @return: none
+*/
 void Librarian::calcFine(int memberID)
 {   
     Date currentDate = getDate("Today");
@@ -139,18 +200,38 @@ void Librarian::calcFine(int memberID)
         std::cout << "Fines are due: £" + differenceInDays << std::endl;
     }
 }
+/*
+    Getter for staffID
+    @param: none
+    @return: the staffID of a librarian
+*/
 int Librarian::getStaffID()
 {
     return this->staffId;
 }
+/*
+    Setter for staffID
+    @param: the staffID of the librarian
+    @return: none
+*/
 void Librarian::setStaffID(int staffID)
 {
     this->staffId = staffID;
 }
+/*
+    Getter for salary
+    @param: none
+    @return: the salary of a librarian
+*/
 int Librarian::getSalary()
 {
     return this->salary;
 }
+/*
+    Setter for salary
+    @param: the salary of the librarian
+    @return: none
+*/
 void Librarian::setSalary(int salary)
 {
     this->salary = salary;
