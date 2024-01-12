@@ -64,9 +64,8 @@ std::string checkFilePath()
                   to extract from
     @return: none
 */
-void extractBookData(std::string bookData[], std::string line)
+void extractBookData(std::vector<std::string>& bookData, std::string line)
 {   
-    int count;
     std::string word = ""; 
     std::string tempWord = "";
 
@@ -75,7 +74,6 @@ void extractBookData(std::string bookData[], std::string line)
 
     bool isWordComplete = true;
 
-    count = 0;
     // seperates each word by using the comma and loops across each word
     while (std::getline(s, word, ',')) 
     { 
@@ -109,8 +107,7 @@ void extractBookData(std::string bookData[], std::string line)
                 word.erase(word.end() - 1);
                 
             }
-            bookData[count] = word;
-            count++;
+            bookData.push_back(word);
         }
     } 
 }
@@ -131,13 +128,15 @@ void readBookFile()
 
     std::ifstream file;
     file.open(filePath);
-    std::string line, word, bookData[5];
+    std::string line, word;
 
     //getting the first line which contains book information
     std::getline(file, line);
     //while loop continues until it reaches end of file
     while (std::getline(file, line)) 
     {
+        // Clear the bookData vector for each line
+        std::vector<std::string> bookData;
         extractBookData(bookData, line);
         /*Book data in the index are as follows:
         0 : BookID(being converted to integer using stoi)
