@@ -18,6 +18,14 @@
 #include <ctime>
 
 
+/*
+    checkFilePath will check whether the string input by the librarian is an
+    actual path or not and displays appropriate messages if so. Furthermore, it
+    also checks if the file is a .csv file which is what the system was designed
+    for.
+    @param: none
+    @return: a validated file path
+*/
 std::string checkFilePath()
 {
     std::string filePath;
@@ -32,7 +40,8 @@ std::string checkFilePath()
             std::cout << "File does not exist at path: " + filePath + "\n";
         }
         else
-        {
+        {   
+            // checking if file is a .csv file
             int len = filePath.length();
             if (len >= 3) 
             {
