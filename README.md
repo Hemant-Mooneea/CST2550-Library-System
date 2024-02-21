@@ -8,6 +8,13 @@ The project requirement was to create a library system using a Command Line Inte
 
 The library system allows the a library member to register an account, borrow books and return books(and pay any fines if the book is returned late)
 
+## Image Demonstration
+
+![Image Alt text](/images/4.png)
+![Image Alt text](/images/3.png)
+![Image Alt text](/images/2.png)
+![Image Alt text](/images/1.png)
+![Image Alt text](/images/5.png)
 ## Tech Used
 
 - C++
